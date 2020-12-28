@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const socket = io('http://localhost:3001/',{'forceNew':true, query: "foo=393189629" });
+        socket.on('connect',function(data) {    
+            console.log("Server is connected");
+        });
+      
+        socket.on('bikeList',result=>{
+            console.log(result);
+        });
+
+        // $.ajax({
+        //           type: "Post",
+        //           url: "http://localhost:3001/api/v1/vechileareaList",
+        //           data:{"area":areaname},
+        //           success: function (response) {
+        //            //console.log(response);
+                   
+        //             bikeListData=[];
+        //             //shapename=response.shapetype;
+        //             for(var x=0;x<response.length;x++){
+        //               bikeList.push({lat:parseFloat(response[x].lat),lng:parseFloat(response[x].lng)})
+        //             }
+        //             resolve(response);
+        //            console.log(bikeList);
+        //           },
+        //           failure: function (msg) {
+        //             console.log(msg);
+        //            // reject(msg);
+        //           }
+        //       });
+            
+    </script>
+</body>
+</html>

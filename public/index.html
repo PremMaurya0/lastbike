@@ -1,0 +1,305 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="styleshteet.css">
+        <script src="https://use.fontawesome.com/54ff0720f3.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <title>Map UI</title>
+        <style>
+            .mapouter{position:relative;text-align:right;height:500px;width:100%;}
+            .gmap_canvas {overflow:hidden;background:none!important;height:500px;width:100%;}
+            .has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+    .btn{
+    padding: 1px 1px !important;
+    }
+
+        </style>
+    </head>
+    
+    <body onload="initialize();">
+        <div class="main">
+            <div class="sideBarWidget">
+                <div class="logo">
+                    <h3>Map UI</h3>
+                </div>
+                <ul>
+                    <li><a href="index.html">Tracking</a></li>
+                    <li><a href="">Device Management</a></li>
+                </ul>
+            </div>
+
+            <div class="mainContent">
+                <div class="innerWrapper">
+                    <div class="widgetSideMenu">
+                        <div class="searchCloseDiv">
+                            <div class="searchField">
+                                <!-- <form action="" method="">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="bikeId" placeholder="Enter Bike id">
+                                    </div>
+                                </form> -->
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="bikeId" placeholder="Enter Bike id">
+                                    <div class="input-group-append">
+                                      <button class="btn btn-secondary" id="closeicon" type="button">
+                                        <i class="fa fa-search" ></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                            </div>
+                            <!-- <div class="closeBtnDiv">
+                                <button type="button" class="closeBtn"><i class="fa fa-timess"></i></button>
+                            </div> -->
+                            <!-- <div class="mapMainBlock">
+                            <div class="currentStatus">
+                                <ul>
+                                    <li class="closeBtn"><a class="redBg" href="javascript:;" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Blocked Bikes"><i class="fa fa-timess"></i></a></li>                   
+                         
+                                </ul>
+                            </div>
+                        </div> -->
+                        </div>
+                        
+                        
+                        <div class="detailsInfo" id="detailsInfo2">
+                            <h5>Bike Info</h5>
+                            <div class="infoMainBlock">
+                                <div class="labelKey">Bike Driver Name</div>
+                                <div class="labelValue" id="driver_name"></div>
+                            </div>
+                            <div class="infoMainBlock">
+                                <div class="labelKey">Bike No</div>
+                                <div class="labelValue" id="bike_no"></div>
+                            </div>
+                            <div class="infoMainBlock">
+                                <div class="labelKey">Device ID</div>
+                                <div class="labelValue" id="device_id"></div>
+                            </div>
+
+                            <div class="infoMainBlock">
+                                <div class="labelKey">Bike Sim Id</Div>
+                                <div class="labelValue" id="sim_no"></div>
+                            </div>
+                        </div>
+
+                        <div class="blockUnblockSection">
+                            <form class="form cf">
+                                <section class="payment-plan cf">
+                                    <input type="radio" name="bike_status" id="Unblock" value="Unblock" >
+                                    <label class="Unblock-label four col" id="Unblock2" for="Unblock">Unblock</label>
+
+                                    <input type="radio" name="bike_status" id="Block" value="Block">
+                                    <label class="Block-label four col" id="Block2" for="Block">Block</label>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="mapMainBlock">
+                        <div class="currentStatus">
+                            <ul>
+                                <li  id="closeBox" class="closeBtn"><a class="blueBg" href="javascript:;" data-toggle="tooltip" data-placement="right" title="closeBox"><i style="margin: 9px" class="fa fa-close"></i></a></li>
+                                <li  id="openBox"><a class="yellowBg" href="javascript:;" data-toggle="tooltip" data-placement="right" title="Open Box"><i style="margin: 9px" class="fa fa-eye"></i></a></li>
+                                <li><a class="redBg" href="javascript:;" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Blocked Bikes">&nbsp;</a></li>                   
+                                <li><a class="lightGreenBg" href="javascript:;" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Ongoing Bikes">&nbsp;</a></li>
+                            </ul>
+                        </div>
+                        <div class="innerMap">
+                            <div class="mapouter">
+                                <div class="gmap_canvas" id="gmap_canvas">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script>
+
+            $("#openBox").show();
+            $("#closeBox").hide();
+            $('.currentStatus .yellowBg').click(function(){
+                // alert("hello");
+                $("#openBox").hide();
+                $("#closeBox").show();
+                $('.innerWrapper').addClass("toggled");
+            });
+            $(".closeBtn").click(function() {
+                $("#openBox").show();
+               $("#closeBox").hide();
+                $('.innerWrapper').removeClass("toggled");
+            });
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
+         <script src="/socket.io/socket.io.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZIIPkxUOhnlEUuegCFhDUpcAvTQIXozs&libraries=places&sensor=false"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            const socket = io('http://15.207.162.5:3001/',{'forceNew':true });
+            var map;
+            var i ;  
+ 
+            function initialize()  { 
+                var mapOptions = {
+                    center: new google.maps.LatLng('28.6304', '77.2177'),
+                    zoom: 6,
+                   // scrollwheel: false,
+                   // disableDefaultUI: false,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById("gmap_canvas"),mapOptions);
+            }
+            // function addMarker() {
+            //     marker = new google.maps.Marker({
+            //         position: new google.maps.LatLng(23.72, 72.100),
+            //         map: map,
+            //     });
+            // }
+            socket.on('connect',function(data) {    
+                console.log("Server is connected");
+            });
+            var marker='';
+            socket.on('bikeList', (dataSet)=>{ 
+                marker='';
+                $.each(dataSet, function(){
+                    i++;
+                    console.log(this['latitude'] +','+ this['longitude']);
+                    
+                    if(this['status_command'] == 'BikeStart'){
+                        var icon_img = "http://maps.google.com/mapfiles/ms/icons/green-dot.png" ;
+                    } else {
+                        var icon_img = "http://maps.google.com/mapfiles/ms/icons/red-dot.png" ;
+                    }
+                    marker = new google.maps.Marker({
+                        position  : new google.maps.LatLng(this['latitude'], this['longitude']),
+                        map       : map,
+                        //draggable : true,
+                        icon: { 
+                            url        : icon_img,
+                            scaledSize : new google.maps.Size(40, 40),
+                        }
+                    });
+                    var content = "Bike-Number: "+this['contact_no']     
+
+                    var infowindow = new google.maps.InfoWindow()
+
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                        return function() {
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+                    
+                })
+            });
+           
+            $("#closeicon").click(function(){       
+                var bikeId=$("#bikeId").val(); 
+                if(bikeId!=null || bikeId!=""){
+                    getBike_data(bikeId);
+                }else{
+                    alert("Plaese Enter Bike ID");
+                }
+                
+            });
+
+            $("#detailsInfo2").hide();
+            $(".blockUnblockSection").hide();
+            function getBike_data(thiss){  
+                $.ajax({
+                    url      : 'http://15.207.162.5:3001/api/v1/getDetail?gsm_mobile='+thiss,
+                    type    : 'GET',
+                    data    : {},
+                    success : function(data){
+                       console.log(data.status_command);
+                        $("#detailsInfo2").show();
+                        $(".blockUnblockSection").show();
+                        $("#driver_name").text(data.name);
+                        $("#bike_no").text(data.contact_no);
+                        $("#device_id").text(data.contact_no);
+                        $("#sim_no").text(data.contact_no); 
+                        $("#Unblock").data("mobile", data.contact_no);
+                        $("#Block").data("mobile", data.contact_no);   
+
+                        if(data.status_command =='BikeStart'){
+                            $("#Block").prop("checked", true);
+                        } 
+                        else if(data.status_command =='BikeStop'){
+                            $("#Unblock").prop("checked", true);  
+                        }
+                        
+                    }
+                });
+                return false ;
+            }
+
+
+            $("#Block").click(function(){
+                $("#Block").prop("checked", true);
+                console.log($(this).data("mobile"));
+                bikeStatus($(this).data("mobile"),"BikeStop");
+            });
+            $("#Unblock").click(function(){
+                $("#Unblock").prop("checked", true);
+                console.log($(this).data("mobile"));
+                bikeStatus($(this).data("mobile"),"BikeStart");
+            });
+            function bikeStatus(mobileno,val){  
+                console.log(mobileno);
+                console.log(val);
+                $.ajax({
+                    url      : 'http://15.207.162.5:3001/api/v1/updateStatus',
+                    type    : 'Post',
+                    data    : { "gsmmobile" : mobileno, "bikestatus" : val },
+                    success : function(dataresult){
+                       
+                       if(dataresult=='Update Data'){
+                        getBike_data(mobileno);
+                       }else{
+                        console.log("Something missing!!")
+                       }
+                       
+                        
+                    }
+                });
+               
+            }
+
+
+
+        </script>
+    </body>
+</html>

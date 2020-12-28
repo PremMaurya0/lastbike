@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>List Area Name</h2>
+        <ul class="list-group" id="uldata">
+          
+        </ul>
+      </div>
+
+    <script>
+
+        function areaList(){
+            $.ajax({
+                  type: "GET",
+                  url: "http://localhost:3001/api/v1/areaList",
+                  data:{},
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (response) {
+                      console.log(response);
+                      $("#uldata").html('');
+                      if(response.areaList.length>0){
+                      for(var x=0;x<response.areaList.length;x++){
+                        $("#uldata").append('<li class="list-group-item"><a href=polygonview.html?area='+response.areaList[x].AreaNumber+'>'+response.areaList[x].AreaName+'</a></li>')
+                      }
+                    }else{
+                      $("#uldata").append('<li class="list-group-item">Records Not Found!!</li>')
+                    }
+                      
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                  }
+              });
+        }
+        areaList();
+    </script>
+</body>
+</html>

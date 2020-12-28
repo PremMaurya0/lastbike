@@ -1,0 +1,337 @@
+@keyframes swing {
+    0% {
+      transform: rotate(0deg);
+    }
+    10% {
+      transform: rotate(10deg);
+    }
+    30% {
+      transform: rotate(0deg);
+    }
+    40% {
+      transform: rotate(-10deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    60% {
+      transform: rotate(5deg);
+    }
+    70% {
+      transform: rotate(0deg);
+    }
+    80% {
+      transform: rotate(-5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  
+  @keyframes sonar {
+    0% {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+  body {
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /*Custome css*/
+  
+.main{
+    width:100%;
+    float:left;
+    height:100vh;
+    position:relative;
+    background: #01012a;
+}
+.logo h3{
+    color: #fff;
+    padding: 30px;
+    font-weight: 700;
+}
+.sideBarWidget{
+    width:220px;
+    float:left;
+    position:fixed;
+    left:0;
+}
+.sideBarWidget ul li{
+    list-style:none;
+}
+.sideBarWidget ul li a{
+    width: 100%;
+    float: left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color:#ffffff;
+}
+.sideBarWidget ul li a:hover{
+    text-decoration:none;
+}
+.mainContent{
+    width:calc(100% - 230px);
+    float:right;
+    background:#f4f4f4;
+    padding:10px;
+    border-radius:25px;
+    height: 98vh;
+    margin: 5px;
+
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+.innerWrapper{
+    width:100%;
+    float:left;
+    position:relative;
+}
+.innerWrapper .widgetSideMenu{
+    width:0px;
+    position: absolute;
+    left:0;
+    top:0px;
+    height:100%;
+    /* transition: width 2s; */
+    background: #fff;
+    border-radius: 10px;
+    opacity: 0;
+}
+
+.innerWrapper.toggled .widgetSideMenu{
+    width:210px;
+    opacity: 1;
+
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+.mapMainBlock{
+    width:100%;
+    float:left;
+    display: flex;
+    border-radius: 10px;
+    padding: 10px;
+    background: #ffffff;
+
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+.innerWrapper.toggled .mapMainBlock{
+    width:calc(100% - 220px);
+    float:right;
+
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+    
+}
+.mapMainBlock .innerMap{
+    width:100%;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+.mapMainBlock .currentStatus{
+    width:50px;
+    float:left;
+}
+.mapMainBlock .currentStatus ul{
+    padding-left: 0;
+}
+.mapMainBlock .currentStatus ul li{
+    width:30px;
+    height:30px;
+   
+    list-style:none;
+    margin-bottom:10px;
+}
+
+.mapMainBlock .currentStatus ul li a{
+    width: 100%;
+    height: 100%;
+    border-radius:50%;
+    /* background:#4CAF50; */
+    float: left;
+}
+.mapMainBlock .currentStatus ul li a:hover{
+    text-decoration:none;
+}
+
+.closeBtnDiv{
+    text-align: right;
+    padding: 5px;
+    width: 20px;
+    float: right;
+}
+.closeBtnDiv1{
+    text-align: right;
+    padding: 5px;
+    width: 20px;
+    float: right;
+}
+.closeBtnDiv .closeBtn{
+    background: none;
+    border-radius: 50%;
+    /* border: 2px solid #c4c3c3; */
+    border:none;
+    display: none;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+.closeBtnDiv1 .closeBtn2{
+    background: none;
+    border-radius: 50%;
+    /* border: 2px solid #c4c3c3; */
+    border:none;
+    display: none;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+
+.closeBtnDiv .closeBtn:hover, .closeBtnDiv .closeBtn:focus{
+    outline: none;
+}
+.innerWrapper.toggled .widgetSideMenu .closeBtnDiv .closeBtn{
+    display:block;
+    float: right;
+    margin-top: 8px;
+    color: #9f9f9f;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+
+/*custom Radio button*/
+
+.blockUnblockSection{
+    position: absolute;
+    bottom:0px;
+    left:0;
+    display:none;
+}
+.innerWrapper.toggled .blockUnblockSection, .innerWrapper.toggled .detailsInfo, .innerWrapper.toggled .searchCloseDiv{
+    display:block;
+}
+.blockUnblockSection .form .plan input, .blockUnblockSection .form .payment-plan input, .blockUnblockSection.form .payment-type input{
+	display: none;
+}
+
+.blockUnblockSection .form label{
+	position: relative;
+	color: #fff;
+	background-color: #aaa;
+    font-size: 16px;
+    font-weight:600;
+	text-align: center;
+	height: 75px;
+    line-height: 75px;
+	display: block;
+	cursor: pointer;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    margin: 4px;
+    width: 90px;
+}
+
+.blockUnblockSection .form .plan input:checked + label, .blockUnblockSection .form .payment-plan input:checked + label, .blockUnblockSection .form .payment-type input:checked + label{
+	
+	background-color: #2fcc71;
+}
+
+.blockUnblockSection .form .plan input:checked + label:after, .blockUnblockSection form .payment-plan input:checked + label:after, .blockUnblockSection .form .payment-type input:checked + label:after{
+	content: "\2713";
+    width: 25px;
+    height: 25px;
+    line-height: 23px;
+    border-radius: 100%;
+    border: 2px solid #333;
+    background-color: #2fcc71;
+    z-index: 999;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+.detailsInfo{
+    position: relative;
+    margin-top: 40px;
+    display:none;
+    padding: 10px;
+}
+.detailsInfo h5{
+    margin-bottom: 20px;
+}
+.detailsInfo .infoMainBlock{
+    margin-bottom:20px;
+}
+.detailsInfo .infoMainBlock .labelKey{
+    font-size: 13px;
+    font-weight: 500;
+    color: #b8860b;
+}
+.detailsInfo .infoMainBlock .labelValue{
+    font-size: 15px;
+    font-weight: 600;
+    color: #6a6a6a;
+}
+.searchCloseDiv{
+    width:100%;
+    float: left;
+    display: none;
+}
+.searchField {
+    width: 80%;
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.searchField .form-control{
+    border-radius: 20px;
+    height: 28px;
+    font-size: 12px;
+}
+
+.lightGreenBg{
+    background: #2fcc71;
+}
+.yellowBg{
+    background:#f7ff64;
+}
+.blueBg{
+    background: #0c65da;;
+}
+.darkBlueBG{
+    background:#070772;
+}
+.redBg{
+    background:#FF5722;
+}

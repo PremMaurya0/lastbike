@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add vechile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    
+
+    <div class="container">
+        <h2>Vechile form</h2>
+        
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="deviceid">Device Id:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="deviceid" placeholder="Device Id">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="ModelName">Model Name:</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="ModelName" placeholder="Model Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="VechileNumber">Vechile Number</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="VechileNumber" placeholder="Vechile Number">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="ChassisNumber">Chassis Number:</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="ChassisNumber" placeholder="Chassis Number">
+            </div>
+          </div>
+
+          <!-- <div class="form-group">
+            <label class="control-label col-sm-2" for="ModelType">Model Type:</label>
+            <div class="col-sm-10"> 
+            <select class="input w-full border flex-1">
+                <option selected disabled>Vehicle type</option>
+                <option>Vehicle 1</option>
+                <option>Vehicle 2</option>
+            </select>
+            </div>
+        </div> -->
+
+          <div class="form-group">        
+            <div class="col-sm-offset-2 col-sm-10">
+              <input type="button" class="btn btn-default" id="savedata" value="Save" />
+            </div>
+          </div>
+       
+      </div>
+
+        <script>
+            var vechileData={};
+            $("#savedata").on("click", function(){
+
+                if($("#deviceid").val()==""){
+                    console.log("Please Enter Device ID");
+                }
+                else if($("#ModelName").val()==""){
+                    console.log("Please Enter Model Name");
+                }
+               else if($("#VechileNumber").val()==""){
+                console.log("Please Enter Vechile Number");
+                }
+                else if($("#ChassisNumber").val()==""){
+                    console.log("Please Enter Chassis Number");
+                }else{
+                    vechileData={
+                    DeviceId:$("#deviceid").val(),
+                    modelname:$("#ModelName").val(),
+                    vechileNumber:$("#VechileNumber").val(),
+                    chissisnumber:$("#ChassisNumber").val(),
+                    areaId:0,
+                    lat:0,
+                    lng:0,
+                    status:0
+                }
+
+                $.ajax({
+                  type: "POST",
+                  url: "http://localhost:3001/api/v1/addVechile",
+                  data:JSON.stringify({'objectData': vechileData}),
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (response) {
+                      console.log(response);
+                      reset();
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                  }
+              });
+
+                console.log(vechileData);
+              //  reset();
+                }
+               
+            });
+            function reset(){
+                    $("#deviceid").val("");
+                    $("#ModelName").val("");
+                    $("#VechileNumber").val("");
+                    $("#ChassisNumber").val("");
+                    vechileData={}; 
+            }
+
+        </script>
+</body>
+</html>

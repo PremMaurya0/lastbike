@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Circles</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key= &callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <!-- jsFiddle will insert css and js -->
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  height: 90%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div>
+
+        <!-- <span class="info">Marker <strong>B</strong>: <span id="b" class="bool"></span></span> -->
+        <div id="addmarker"></div>
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+      const citymap = [
+  {
+    center: { lat: 27.0272, lng: 83.3870 },
+    population: 10000,
+    areaName:'satgur',
+    bikeposition:[
+        {
+            marker:{lat:27.0392,lng:83.3923},
+            bikeid:1
+        },
+        {
+            marker:{lat:26.9604,lng:83.3759},
+            bikeid:2
+        },
+        {
+            marker:{lat:27.0295,lng:83.2742},
+            bikeid:3
+        },
+    
+    ]
+  },
+  {
+    center: { lat: 28.6139, lng: 77.2090 },
+    population: 900,
+    areaName:'New Delhi',
+    bikeposition:[
+        {
+            marker:{lat:28.5214,lng:77.0819},
+            bikeid:4
+        },
+        {
+            marker:{lat:28.5649,lng:77.2403},
+            bikeid:5
+        }
+    
+    ]
+  }
+    ];
+   
+
+function initMap() {
+  // Create the map.
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 6,
+    center: { lat: 28.6139, lng: 77.2090 },
+    mapTypeId: "terrain",
+  });
+
+  // Construct the circle for each value in citymap.
+  // Note: We scale the area of the circle based on the population.
+
+ 
+//calculates distance between two points in km's
+function calcDistance(p1, p2) {
+  return (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
+}
+
+
+  var markers=[];
+  for(var city=0;city<citymap.length;city++) {
+    // Add the circle for this city to the map.
+    
+    var latlng=new google.maps.LatLng(citymap[0].center.lat, citymap[0].center.lng);
+    const cityCircle = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      radius: 100000,
+      fillOpacity: 0.35,
+      map,
+      center: citymap[city].center,
+      //radius: Math.sqrt(citymap[city].population) * 1000,
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    var bounds = cityCircle.getBounds();
+         
+    for(var x=0;x<citymap[city].bikeposition.length;x++){
+  //  console.log(citymap[city].bikeposition[x].marker.lat);
+    
+  $("#addmarker").append(`<span id='${citymap[city].bikeposition[x].bikeid}'> Marker : ${bounds.contains(new google.maps.LatLng(citymap[city].center.lat, citymap[city].center.lng))}</span>`)
+   
+    
+    var markerA = new google.maps.Marker({
+                position: new google.maps.LatLng(citymap[city].bikeposition[x].marker.lat,citymap[city].bikeposition[x].marker.lng),
+                title: citymap[city].areaName,
+                map: map,
+                draggable: true,
+                id: citymap[city].bikeposition[x].bikeid
+            });
+            console.log(citymap[city].bikeposition[x].bikeid);
+            
+        var infoA = new google.maps.InfoWindow({
+                content: '<span class="infowin">Marker A (draggable)'+citymap[city].bikeposition[x].bikeid+'</span>',
+            });
+
+
+    // google.maps.event.addListener(markerA, 'dragend', function(marker,x) {
+    //     latLngCenter = new google.maps.LatLng(markerA.position.lat(), markerA.position.lng());
+    //    // noteB.text(bounds.contains(markerA.getPosition()))
+    //    console.log(markerA.id);
+    //   // console.log(markerA.title);
+    //    //$("#addmarker").append(`<span> Marker : ${bounds.contains(markerA.getPosition())}</span>`)
+   
+    // });
+
+
+    google.maps.event.addListener(markerA, 'dragend', function (marker) {
+        var p1 = new google.maps.LatLng(27.0272, 83.3870);
+        var p2 = new google.maps.LatLng(marker.latLng.lat(), marker.latLng.lng());
+
+        console.log(calcDistance(p1, p2));
+
+       // return function () {
+            //infowindow.setContent(locations[i][2]);
+            //infowindow.open(map, marker);
+            console.log(bounds.contains(new google.maps.LatLng(marker.latLng.lat(), marker.latLng.lng())));
+          
+           // $("#"+marker.id).text(" Marker : "+ bounds.contains(marker.latLng));
+       // }
+
+});
+
+
+google.maps.event.addListener(markerA, 'drag', (function (marker, x) {
+
+return function () {
+    //infowindow.setContent(locations[i][2]);
+    //infowindow.open(map, marker);
+    $("#"+marker.id).text(" Marker : draggin&hellip;");
+}
+
+})(markerA, x));
+
+    
+   
+    }   
+
+  }
+  
+}
+  </script>
+</html>

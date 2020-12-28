@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vechile List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZIIPkxUOhnlEUuegCFhDUpcAvTQIXozs&callback=initMap&libraries=drawing&v=weekly"
+      defer
+    ></script>
+    <style>
+
+#map {
+  height: 80%;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Vechile List</h2>
+                 
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Device ID</th>
+              <th>Vechile Number</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+
+
+        <!-- Modal -->
+        <div id="myModal" class="modal" role="dialog">
+            <div class="modal-dialog">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="mySelect">Choose a Area:</label>
+                    <select id="mySelect" onchange="getSelectValue()">       
+                    </select>  
+                    <div style="width: 500px; height: 350px;">
+                        <div id="map"></div>
+                    </div>
+                    
+                   
+
+             
+                </div>
+                <div class="modal-footer">
+                <button type="button" id="savedata" class="btn btn-default">Save</button>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+
+
+      </div>
+
+
+    <script>
+var modal = document.getElementById("myModal");
+var areaNumber,byikid,lat,lng;
+        function vechileList(){
+            $.ajax({
+                  type: "GET",
+                  url: "http://localhost:3001/api/v1/vechileList",
+                  data:{},
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (response) {
+                      console.log(response);
+                    $("table >tbody").html('');
+                    var html;  
+                    if(response.length>0){
+                      for(var x=0;x<response.length;x++){
+                          html='';
+                          if(response[x].status==0){
+                            html+="<input type='button' onclick='getdata("+response[x].id.toString()+")' value='Map Area' />";
+                          }else{
+                            html+="<input type='button' onclick='getdata("+response[x].id.toString()+")' value='Rechange MapArea' />";
+                         
+                          }
+                        $("table >tbody").append(`<tr>
+                        <td>${response[x].DeviceId}</td>
+                        <td>${response[x].vechileNumber}</td>
+                        <td>${html}</td>
+                        </tr>`);
+                      }
+                    }else{
+                        $("table >tbody").append(`<tr>
+                        <td collspan="3">Records Not Found!!</td></tr>`)
+                    }
+                      
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                  }
+              });
+        }
+        vechileList();
+        function getdata(id){
+            byikid=id;
+            modal.style.display = "block";
+        }
+      //  modal.style.display = "block";
+
+      function areaList(){
+            $.ajax({
+                  type: "GET",
+                  url: "http://localhost:3001/api/v1/areaList",
+                  data:{},
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (response) {
+                     // console.log(response);
+                      $("#mySelect").html('');
+                      if(response.areaList.length>0){
+                        $('#mySelect').append($('<option>', { 
+                            value: "0",
+                            text :"Select Area" ,
+                         }));
+                      for(var x=0;x<response.areaList.length;x++){
+                        $('#mySelect').append($('<option>', { 
+                            value: response.areaList[x].AreaNumber,
+                            text : response.areaList[x].AreaName 
+                        }));
+                       
+                      }
+                    }
+                    // else{
+                    //   $("#uldata").append('<li class="list-group-item">Records Not Found!!</li>')
+                    // }
+                      
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                  }
+              });
+        }
+        areaList();
+
+        function getSelectValue()
+        {
+            var selectedValue = document.getElementById("mySelect").value;
+          //  alert(selectedValue);
+            areaNumber=selectedValue;
+            areaSingle(selectedValue).then(initMap2);
+        }
+
+
+
+     
+  var Coords=[],shapename;
+function areaSingle(areaname){
+  return new Promise((resolve, reject) => {
+            $.ajax({
+                  type: "Post",
+                  url: "http://localhost:3001/api/v1/areaSingle",
+                  data:{"areanumber":areaname},
+                  success: function (response) {
+                   
+                    Coords=[];
+                    shapename=response.shapetype;
+                    for(var x=0;x<response.List.length;x++){
+                      Coords.push({lat:parseFloat(response.List[x].lat),lng:parseFloat(response.List[x].lng)})
+                    }
+                    resolve(response.shapetype);
+                   
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                    reject(msg);
+                  }
+              });
+            });
+        }
+
+
+// This example creates a simple polygon representing the Bermuda Triangle.
+// When the user clicks on the polygon an info window opens, showing
+// information about the polygon's coordinates.
+
+let map;
+
+function initMap() {
+
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 8,
+    center: { lat: 28.6139, lng:77.2090 },
+    mapTypeId: "terrain",
+  });
+
+ 
+
+}
+
+function initMap2(){
+ 
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 7,
+    center: { lat: Coords[0].lat, lng:Coords[0].lng },
+    mapTypeId: "terrain",
+  });
+ 
+  if(shapename=="polygon"){
+
+    const region = new google.maps.Polygon({
+    map: map,
+    clickable: false,
+    paths: Coords,
+    });
+
+
+  var bounds = new google.maps.LatLngBounds();
+  for (var i = 0; i < region.getPath().getLength(); i++) {
+    bounds.extend(region.getPath().getAt(i));
+  }
+  map.fitBounds(bounds);
+   var marker = new google.maps.Marker({
+    map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    position: { lat: Coords[0].lat, lng:Coords[0].lng },
+  });
+  marker.addListener("onload", toggleBounce);
+    
+    google.maps.event.addListener(marker, 'dragend', function (marker) {
+        if(bounds.contains(new google.maps.LatLng(marker.latLng.lat(), marker.latLng.lng()))==true){
+        console.log(marker.latLng.lat(), marker.latLng.lng());
+        lat=marker.latLng.lat();
+        lng=marker.latLng.lng();
+      }else{
+        console.log("Not Data Save Because your bike is out of area");
+      }
+    });   
+ 
+  }else{
+    
+    var latlng=new google.maps.LatLng(Coords[0].lat, Coords[0].lng);
+    const cityCircle = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      radius: 100000,
+      fillOpacity: 0.35,
+      map,
+      center: Coords[0],
+      //radius: Math.sqrt(citymap[city].population) * 1000,
+    });
+ 
+    var bounds = cityCircle.getBounds();
+    var marker = new google.maps.Marker({
+    map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    position: { lat: Coords[0].lat, lng:Coords[0].lng },
+  });
+
+
+  marker.addListener("onload", toggleBounce);
+  google.maps.event.addListener(marker, 'dragend', function (marker) {
+      if(bounds.contains(new google.maps.LatLng(marker.latLng.lat(), marker.latLng.lng()))==true){
+        console.log(marker.latLng.lat(), marker.latLng.lng());
+        lat=marker.latLng.lat();
+        lng=marker.latLng.lng();
+      }else{
+        console.log("Not Data Save Because your bike is out of area");
+      }
+        
+       
+    }); 
+  }
+  
+
+}
+
+function toggleBounce() {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+$("#savedata").on("click",function(){
+    // console.log(byikid);
+    // console.log(areaNumber);
+    // console.log(lat);
+    // console.log(lng);
+    if(byikid==""){
+console.log("bike id is missing");
+    }else if(areaNumber==""){
+        console.log("Area Number is missing");
+    }else if(lat==""){
+        console.log("lat is missing");
+    }else if(lng==""){
+        console.log("lng is missing");
+    }else{
+        var obj={
+        id:byikid,
+        areaId:areaNumber,
+        lat:lat,
+        lng:lng
+    }
+             $.ajax({
+                  type: "POST",
+                  url: "http://localhost:3001/api/v1/updateVechile",
+                  data:JSON.stringify({'objectData': obj}),
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (response) {
+                      console.log(response);
+                     obj={};
+                     modal.style.display="none";
+                     $("#mySelect").val(0);
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                  }
+              });
+    }
+})
+  </script>
+
+
+
+
+
+
+    </script>
+</body>
+</html>
