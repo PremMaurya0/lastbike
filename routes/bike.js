@@ -18,13 +18,13 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 module.exports=function(deviceKey,io){
 
-  cron.schedule('* * * * *', () => {
-   // console.log('running every minute to 1 from 5');
-   bykeManagementCtrl.selectAllData(result=>{
+  // cron.schedule('* * * * *', () => {
+  //  // console.log('running every minute to 1 from 5');
+  //  bykeManagementCtrl.selectAllData(result=>{
       
-      io.sockets.emit('bikeList', result);
-    });
-  });
+  //     io.sockets.emit('bikeList', result);
+  //   });
+  // });
 
 
   router.post('/v1/requests', function(req, res) {

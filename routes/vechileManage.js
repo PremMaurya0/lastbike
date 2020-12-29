@@ -3,10 +3,10 @@ const router = express.Router();
 const vechileManagementCtrl = require('../controller/vechileManagement');
 var _=require("underscore");
 var cron = require('node-cron');
-const storage = require('node-persist');
-(async function(){
- await storage.init();
-});
+// const storage = require('node-persist');
+// (async function(){
+//  await storage.init();
+// });
 
 module.exports=function(io){
 
@@ -73,21 +73,21 @@ module.exports=function(io){
     });
 
     io.on('connection', function(socket) {
-     // console.log('A user connected');        
-      //console.log(socket.handshake.query['foo']);
+
+      console.log('A user connected');    
+
       socket.on('disconnect', function () {
-        // console.log('A user disconnected');
+         console.log('A user disconnected');
       });
       
-       cron.schedule('* * * * * *', () => {
-          //console.log(socket.handshake.query['foo']);
+        setInterval(() => {  
+      
           vechileManagementCtrl.vechileAreaBase({data:socket.handshake.query['foo']},result=>{
-              // io.sockets.emit('bikeList', result);
-           //   console.log(result);
               socket.emit('bikeList', result)
              });
-          
-      });
+
+        },30000);
+
     });
   
      

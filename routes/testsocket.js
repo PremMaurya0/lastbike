@@ -11,25 +11,25 @@ const storage = require('node-persist');
 module.exports=function(io){
 
 
-    io.on('connection', function(socket) {
-        console.log('A user connected');        
-        //console.log(socket.handshake.query['foo']);
-        socket.on('disconnect', function () {
-           console.log('A user disconnected');
-        });
+    // io.on('connection', function(socket) {
+    //     console.log('A user connected');        
+    //     //console.log(socket.handshake.query['foo']);
+    //     socket.on('disconnect', function () {
+    //        console.log('A user disconnected');
+    //     });
         
-         cron.schedule('* * * * * *', () => {
-            //console.log(socket.handshake.query['foo']);
-            vechileManagementCtrl.vechileAreaBase({data:socket.handshake.query['foo']},result=>{
-                // io.sockets.emit('bikeList', result);
-               // console.log(result);
-                socket.emit('bikeList', result)
-               });
+    //      cron.schedule('* * * * * *', () => {
+    //         //console.log(socket.handshake.query['foo']);
+    //         vechileManagementCtrl.vechileAreaBase({data:socket.handshake.query['foo']},result=>{
+    //             // io.sockets.emit('bikeList', result);
+    //            // console.log(result);
+    //             socket.emit('bikeList', result)
+    //            });
             
-        });
+    //     });
     
       
-      });
+    //   });
 
     
     return router;

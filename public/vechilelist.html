@@ -80,7 +80,7 @@ var areaNumber,byikid,lat,lng;
         function vechileList(){
             $.ajax({
                   type: "GET",
-                  url: "http://localhost:3001/api/v1/vechileList",
+                  url: "http://15.207.162.5:3001/api/v1/vechileList",
                   data:{},
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
@@ -124,7 +124,7 @@ var areaNumber,byikid,lat,lng;
       function areaList(){
             $.ajax({
                   type: "GET",
-                  url: "http://localhost:3001/api/v1/areaList",
+                  url: "http://15.207.162.5:3001/api/v1/areaList",
                   data:{},
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
@@ -172,7 +172,7 @@ function areaSingle(areaname){
   return new Promise((resolve, reject) => {
             $.ajax({
                   type: "Post",
-                  url: "http://localhost:3001/api/v1/areaSingle",
+                  url: "http://15.207.162.5:3001/api/v1/areaSingle",
                   data:{"areanumber":areaname},
                   success: function (response) {
                    
@@ -247,6 +247,7 @@ function initMap2(){
         lat=marker.latLng.lat();
         lng=marker.latLng.lng();
       }else{
+        console.log(marker.latLng.lat(), marker.latLng.lng());
         console.log("Not Data Save Because your bike is out of area");
       }
     });   
@@ -282,6 +283,7 @@ function initMap2(){
         lat=marker.latLng.lat();
         lng=marker.latLng.lng();
       }else{
+        console.log(marker.latLng.lat(), marker.latLng.lng());
         console.log("Not Data Save Because your bike is out of area");
       }
         
@@ -321,7 +323,7 @@ console.log("bike id is missing");
     }
              $.ajax({
                   type: "POST",
-                  url: "http://localhost:3001/api/v1/updateVechile",
+                  url: "http://15.207.162.5:3001/api/v1/updateVechile",
                   data:JSON.stringify({'objectData': obj}),
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",

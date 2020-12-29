@@ -47,18 +47,6 @@ app.use('/api', vechile);
 app.get('/', function(req, res) {
   res.sendfile('index.html');
 });
-// io.on('connection', function(socket) {
-//   console.log('A user connected');
-//       //Whenever someone disconnects this piece of code executed
-//   socket.on('disconnect', function () {
-//      console.log('A user disconnected');
-//   });
-// //   socket.on('param', function (dataparam) {
-// //     console.log(dataparam);
-// //  });
-// });
-
-
 
 
 http.listen(3001,(err)=>{
