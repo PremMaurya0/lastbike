@@ -11,11 +11,11 @@ const io = require('socket.io')(http);
 require("./DbConnection");
 
 //Route Define
-var byke = require('./routes/bike')(app,io);
+//var byke = require('./routes/bike')(app,io);
 var area = require('./routes/areaManage')();
 var vechile = require('./routes/vechileManage')(io);
 //var testapp = require('./routes/test');
-var testsocket = require('./routes/testsocket')(io);
+//var testsocket = require('./routes/testsocket')(io);
 
 app.use(bodyParser.json({limit: '500000mb'}));
 app.use(bodyParser.urlencoded({limit: '500000mb', extended: true, parameterLimit: 10000000000}));
@@ -39,8 +39,8 @@ app.get('/', function(req, res) {
   res.sendfile('index.html');
 });
 
-app.use('/api', testsocket);
-app.use('/api', byke);
+//app.use('/api', testsocket);
+//app.use('/api', byke);
 app.use('/api', area);
 app.use('/api', vechile);
 
