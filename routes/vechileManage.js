@@ -3,10 +3,7 @@ const router = express.Router();
 const vechileManagementCtrl = require('../controller/vechileManagement');
 var _=require("underscore");
 var cron = require('node-cron');
-// const storage = require('node-persist');
-// (async function(){
-//  await storage.init();
-// });
+const payload=require('./payload');
 
 module.exports=function(io){
 
@@ -71,6 +68,13 @@ module.exports=function(io){
           });
 
     });
+    router.post('/v1/vechilesinglearea', function(req, res) {
+      
+         vechileManagementCtrl.vechileSingleAreaBase({data:req.body.area,DeviceId:req.body.deviceId},result=>{
+             res.json(result);
+           });
+ 
+     });
 
     io.on('connection', function(socket) {
 
@@ -91,6 +95,66 @@ module.exports=function(io){
     });
   
      
+    router.post('/v1/newupdateStatus', function(req, res) {
+
+      if(req.body.gsmmobile==undefined || req.body.gsmmobile==""){
+        res.json({error:true,message:"gsm_mobile is undefined!!"});
+      }
+      else if(req.body.bikestatus==undefined || req.body.bikestatus==""){
+          res.json({error:true,message:"gsm_mobile is undefined!!"});
+        }
+      else{
+        vechileManagementCtrl.updateStatus(req.body.gsmmobile,req.body.bikestatus, result=>{
+          if(result=="0"){
+              res.json({message:"number is not found!"});
+          }else{
+              res.send(result);
+          }
+        });
+      
+      }
+ 
+    });
+    router.get('/v1/readData', function(req, res) {
+
+      if(req.query.gsm_mobile==undefined){
+        res.json({error:true,message:"gsm_mobile is undefined!!"});
+      }else{
+        vechileManagementCtrl.getStatus(req.query.gsm_mobile, result=>{
+            
+            if(result=="0"){
+                res.json({message:"number is not found!"});
+            }else{
+                res.json({g:result[0].DeviceId,m:result[0].status_command});
+            }
+           
+
+        });
+      ;
+      }
+ 
+    });
+
+
+    router.post('/v1/requests', function(req, res) {
+      
+      payload.google_payloaddataByPrem(deviceKey,req,(requestDevice)=>{
+          
+          if(requestDevice=="400"){
+             
+              res.send("Something is wrong");
+          }
+          else if(requestDevice=="509"){
+            
+              res.send("Something is missing value");
+          }else{
+            vechileManagementCtrl.updatebykedata(requestDevice,result => { 
+                  res.send(result);
+                 
+              });
+          }
+      });
+      });
 
     return router;
 }

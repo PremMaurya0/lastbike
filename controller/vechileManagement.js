@@ -9,7 +9,7 @@ var vechileManagement = {
             else{
 
                 if(data.length==0){
-                    var sqlquery = "insert into vechile (`DeviceId`,`modelname`,`vechileNumber`,`chissisnumber`,`areaId`,`lat`,`lng`,`status`) VALUES ('"+obj.DeviceId+"','"+obj.modelname+"','"+obj.vechileNumber+"','"+obj.chissisnumber+"','"+obj.areaId+"','"+obj.lat+"','"+obj.lng+"','"+obj.status+"')";
+                    var sqlquery = "insert into vechile (`DeviceId`,`modelname`,`vechileNumber`,`chissisnumber`,`areaId`,`lat`,`lng`,`status`,`status_command`) VALUES ('"+obj.DeviceId+"','"+obj.modelname+"','"+obj.vechileNumber+"','"+obj.chissisnumber+"','"+obj.areaId+"','"+obj.lat+"','"+obj.lng+"','"+obj.status+"','BikeStop')";
                     db.query(sqlquery, function (error,result) {
                        if (error) {
                           callback(error,null);
@@ -51,16 +51,127 @@ var vechileManagement = {
             vechileAreaBase:function(obj,callback){
                 //console.log(obj);
                 var sqlquery = "select * from vechile where areaId=?";
-                              db.query(sqlquery,[obj.data], function (error,result) {
-                                 if (error) {
-                                    callback(error,null);
-                                   }
-                                  else{ 
-                                     //console.log(result);
-                                     callback(result,null);
-                              }
-                        });
-                 },
+                  db.query(sqlquery,[obj.data], function (error,result) {
+                     if (error) {
+                        callback(error,null);
+                       }
+                      else{ 
+                         //console.log(result);
+                         callback(result,null);
+                    }
+                  });
+               
+              },
+
+             updateStatus:function(gsmmobile,bikestatus,callback){
+
+                  var number=gsmmobile;
+                  var statusObj=bikestatus;
+                  var sqlquery = "select DeviceId from vechile WHERE DeviceId = ?";
+                  db.query(sqlquery,[number], function (error,results) {
+                      if (error) {
+                      callback(error,null);
+                      }
+                      else{
+                          if(results.length){  
+          
+                  var sqlquery = "update vechile set status_command=? WHERE DeviceId = ?";
+                  db.query(sqlquery,[statusObj,number], function (error,results) {
+                      if (error) {
+                      callback(error,null);
+                      }
+                      else{ 
+                          callback("Update Data",null);
+                      }
+                  });
+              }
+              else{
+                  callback("0",null);
+                  }
+                  }
+              });
+              },
+              vechileSingleAreaBase:function(obj,callback){
+
+                 var sqlquery = "select * from vechile where areaId=? and DeviceId=?";
+                 db.query(sqlquery,[obj.data,obj.DeviceId], function (error,result) {
+                    if (error) {
+                       callback(error,null);
+                      }
+                     else{ 
+                        //console.log(result);
+                        callback(result,null);
+                   }
+                 });
+
+              
+            
+             },
+             updatebykedata:function(obj,callback){
+        
+               if(obj.deviceKey=="" || obj.deviceKey==undefined){
+                   callback('Device Key is must!',null);
+               }else{
+                   if(obj.deviceKey=="Prem_Maurya"){
+                 //  console.log(obj);
+                      var number=obj.datamobile;
+                       var sqlquery = "select DeviceId from vechile WHERE DeviceId = ?";
+                       db.query(sqlquery,[number], function (error,results) {
+                           if (error) {
+                           callback(error,null);
+                           }
+                           else{                 
+                               if(results.length){
+                                   var sqlquery = "UPDATE vechile set lat=? , lng =? WHERE DeviceId = ?";
+                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,number], function (error,result) {
+                                           if (error) {
+                                            callback(error,null);
+                                            }
+                                            else{ 
+                                             callback('update record!',null);
+                                           }
+                                    });
+                               }
+                               else{
+                                   callback('Mobile Number is not registered!',null);
+                               }
+                           }
+                       });
+       
+                   }else{
+                       callback('Device Key not Matched!',null);
+                   } 
+               }
+            
+            },
+            getStatus:function(gsm_mobile,callback){
+
+               var number=gsm_mobile;
+               var sqlquery = "select DeviceId from vechile WHERE DeviceId = ?";
+               db.query(sqlquery,[number], function (error,results) {
+                   if (error) {
+                   callback(error,null);
+                   }
+                   else{
+                       if(results.length){  
+       
+                           var sqlquery = "select DeviceId,status_command from vechile WHERE DeviceId = ?";
+                           db.query(sqlquery,[number], function (error,results) {
+                               if (error) {
+                               callback(error,null);
+                               }
+                               else{ 
+                                   callback(results,null);
+                               }
+                           });
+                        }
+                       else{
+                           callback("0",null);
+                       }
+                   }
+           });
+           
+            }
       
      }
      

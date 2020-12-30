@@ -1,0 +1,530 @@
+
+<!DOCTYPE html>
+<html lang="en" class="light">
+    <!-- BEGIN: Head -->
+    <head>
+        <meta charset="utf-8">
+        <link href="" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <title>Dashboard - Map UI</title>
+        <!-- BEGIN: CSS Assets-->
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZIIPkxUOhnlEUuegCFhDUpcAvTQIXozs&callback=runMaps&libraries=drawing&v=weekly"
+        defer
+      ></script>
+        <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/app.css" />
+        <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/style.css" />
+        
+        <style>
+           .map-w{
+               width: 100%;
+               float: left;
+           }
+           .map-w1{
+               width: 70%;
+               float: left;
+           }
+           .foem-w{
+            width: 80%;
+            display: none;
+            padding-left: 15px;
+            float: right;
+           }
+
+        </style>
+        <!-- END: CSS Assets-->
+    </head>
+    <!-- END: Head -->
+    <body class="app">
+        <!-- BEGIN: Mobile Menu -->
+        <div class="mobile-menu md:hidden">
+            <div class="mobile-menu-bar">
+                <a href="" class="flex mr-auto">
+                    <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                </a>
+                <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
+            </div>
+            <ul class="border-t border-theme-24 py-5 hidden">
+                <li>
+                    <a href="dashboard.html" class="menu menu--active">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> Dashboard </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="tracking.html" class="menu">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> Tracking </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="menu">
+                        <div class="menu__icon"> <i data-feather="box"></i> </div>
+                        <div class="menu__title"> Vehicle <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    </a>
+                    <ul class="">                        
+                        <li>
+                            <a href="vehicle-list.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Vehicle List </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="vehicle-add.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Add Vehicle </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- END: Mobile Menu -->
+        <div class="flex">
+            <!-- BEGIN: Side Menu -->
+            <nav class="side-nav">
+                <a href="" class="intro-x flex items-center pl-5 pt-4">
+                    <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                    <span class="hidden xl:block text-white text-lg ml-3"> Map UI </span>
+                </a>
+                <div class=" my-6"></div>
+                <ul>
+                    <li>
+                        <a href="dashboard.html" class="side-menu side-menu--active">
+                            <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+                            <div class="side-menu__title"> Dashboard </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="5racking.html" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+                            <div class="side-menu__title"> Tracking </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="box"></i> </div>
+                            <div class="side-menu__title"> Vehicle <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                        </a>
+                        <ul class="">                            
+                            <li>
+                                <a href="vehicle-list.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Vehicle List </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="vehicle-add.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Add Vehicle </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="box"></i> </div>
+                            <div class="side-menu__title"> Area <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                        </a>
+                        <ul class="">                            
+                            <li>
+                                <a href="area-list.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Area List  </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="area-create.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Create Area </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <!-- END: Side Menu -->
+            <!-- BEGIN: Content -->
+            <div class="content">
+                <!-- BEGIN: Top Bar -->
+                <div class="top-bar">
+                    <!-- BEGIN: Breadcrumb -->
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Area</a></div>
+                    <!-- END: Breadcrumb -->
+                    
+                    <!-- BEGIN: Notifications -->
+                    <div class="intro-x dropdown mr-auto sm:mr-6">
+                        <div class="dropdown-toggle notification notification--bullet cursor-pointer"> <i data-feather="bell" class="notification__icon dark:text-gray-300"></i> </div>
+                        <div class="notification-content pt-2 dropdown-box">
+                            <div class="notification-content__box dropdown-box__content box dark:bg-dark-6">
+                                <div class="notification-content__title">Notifications</div>
+                                <div class="cursor-pointer relative flex items-center ">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem </div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi</div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Denzel Washington</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi</div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Denzel Washington</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-8.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">05:09 AM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Notifications -->
+                    <!-- BEGIN: Account Menu -->
+                    <div class="intro-x dropdown w-8 h-8">
+                        <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in">
+                            <img alt="Midone Tailwind HTML Admin Template" src="dist/images/profile-3.jpg">
+                        </div>
+                        <div class="dropdown-box w-56">
+                            <div class="dropdown-box__content box bg-theme-38 dark:bg-dark-6 text-white">
+                                <div class="p-4 border-b border-theme-40 dark:border-dark-3">
+                                    <div class="font-medium">User</div>
+                                    <div class="text-xs text-theme-41 dark:text-gray-600">Email@gmail.com</div>
+                                </div>
+                                <div class="p-2">
+                                    <!-- <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
+                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account </a> -->
+                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
+                                    <!-- <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help </a> -->
+                                </div>
+                                <div class="p-2 border-t border-theme-40 dark:border-dark-3">
+                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Account Menu -->
+                </div>
+
+                <div class="grid grid-cols-12 gap-6 mt-5">
+                    <div class="intro-y col-span-12 lg:col-span-12 ">
+                        
+                        <div class="map-w" id="map"></div>
+                    </div>
+               
+                    <div class="md-modal md-effect-12 bg-white">
+                        <div class="md-content">
+                            <div class="grid grid-cols-12 gap-6 mt-8">
+                                <div class="intro-y col-span-12 lg:col-span-12">
+                                    <div class="px-5">
+                                        <h2 class="text-lg font-medium mr-auto">
+                                           Fill Area Name
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-12">
+                                    <div class="px-5">
+                                        <input type="text" class="input w-full border flex-1" placeholder="Area Name" id="areaname">
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-12">
+                                    <div class="px-5" id="errormsg">
+                                        
+                                    </div>
+                                </div>
+                            
+                                <div class="col-span-12 lg:col-span-12 items-center text-center">
+                                    <button type="button" id="close"  style="background-color: brown;" class="button w-24 mr-1 mb-2 bg-theme-1 text-white md-close">Close</button>
+                                    <button type="button" onclick="savaData()" class="button w-24 mr-1 mb-2 bg-theme-1 text-white md-close">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="md-overlay"></div>
+                
+
+                </div>
+            </div>
+            <!-- END: Content -->
+           
+        </div>
+        
+        <!-- END: Dark Mode Switcher-->
+        <!-- BEGIN: JS Assets-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="http://chintansareen.com/demo/MapUI/dist/js/app.js"></script>
+      
+        <script>
+            var saveJson={};
+            var latlngdata=[];
+            // var modal = document.getElementById("myModal");
+            var  map;
+            var runMaps = function () {
+              if (navigator.geolocation) {
+                 
+                navigator.geolocation.getCurrentPosition(function (position) {
+                 map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: 28.6139, lng: 77.2090 },
+                    zoom: 5
+                  });
+                  
+                  google.maps.event.addListener(map, "click", function (event) {
+                    placeMarker(event.latLng);
+                    console.log(event.latLng.toUrlValue(5));
+                  });
+            
+                  function placeMarker(location) {
+                    var marker = new google.maps.Marker({
+                      position: location,
+                      map: map
+                    });
+                  }
+                  var all_overlays = [];
+                  var selectedShape;
+                  var drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.MARKER,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                      position: google.maps.ControlPosition.TOP_CENTER,
+                      drawingModes: [
+                        //google.maps.drawing.OverlayType.MARKER,
+                        google.maps.drawing.OverlayType.CIRCLE,
+                        google.maps.drawing.OverlayType.POLYGON,
+                       
+                      ]
+                    },
+                    markerOptions: {
+                      icon: "images/beachflag.png"
+                    },
+                    circleOptions: {
+                      fillColor: "#ffff00",
+                      fillOpacity: 0.2,
+                      strokeWeight: 3,
+                      clickable: false,
+                      editable: true,
+                      zIndex: 1
+                    },
+                    polygonOptions: {
+                      clickable: true,
+                      draggable: true,
+                      editable: true,
+                      fillColor: "#ffff00",
+                      fillOpacity: 1
+                    },
+                    rectangleOptions: {
+                      clickable: true,
+                      draggable: true,
+                      editable: true,
+                      fillColor: "#ffff00",
+                      fillOpacity: 0.5
+                    }
+                  });
+            
+                  function clearSelection() {
+                    if (selectedShape) {
+                      selectedShape.setEditable(false);
+                      selectedShape = null;
+                    }
+                  }
+            
+                  function setSelection(shape) {
+                    clearSelection();
+                    selectedShape = shape;
+                    shape.setEditable(true);
+                    // google.maps.event.addListener(selectedShape.getPath(), 'insert_at', getPolygonCoords(shape));
+                    // google.maps.event.addListener(selectedShape.getPath(), 'set_at', getPolygonCoords(shape));
+                  }
+            
+                  function deleteSelectedShape() {
+                    if (selectedShape) {
+                      selectedShape.setMap(null);
+                      $(".md-modal").removeClass("md-show");
+                    }
+                  }
+                  $("#close").on("click",function(){
+                   
+                        deleteSelectedShape();
+                    })
+          
+                  function deleteAllShape() {
+                    for (var i = 0; i < all_overlays.length; i++) {
+                      all_overlays[i].overlay.setMap(null);
+                    }
+                    all_overlays = [];
+                  }
+            
+                  function CenterControl(controlDiv, map) {
+                 
+                    // Setup the click event listeners: simply set the map to Chicago.
+                   $("#deletearea").on("click", function () {
+                      latlngdata=[];
+                      deleteSelectedShape();
+                      $("#areaname").val('');
+                      
+                    });
+                  }
+                  drawingManager.setMap(map);
+                  var getPolygonCoords = function (newShape) {
+                    console.log("We are one");
+                    var len = newShape.getPath().getLength();
+                    for (var i = 0; i < len; i++) {
+                      console.log(newShape.getPath().getAt(i).toUrlValue(6));
+                    }
+                  };
+            
+            
+                  google.maps.event.addListener(
+                    drawingManager,
+                    "overlaycomplete",
+                    function (event) {
+                      all_overlays.push(event);
+                      if (event.type !== google.maps.drawing.OverlayType.MARKER) {
+                        drawingManager.setDrawingMode(null);
+                    
+                        var newShape = event.overlay;
+                        newShape.type = event.type;
+                       // modal.style.display = "block";
+                        $(".md-modal").addClass("md-show");
+                        
+                      if (event.type == 'circle') {
+                        //console.log(event.overlay.getRadius())
+                        latlngdata.push({shapetype:'circle',redius:event.overlay.getRadius(),lat:event.overlay.getCenter().lat(),lng:event.overlay.getCenter().lng()});
+                      
+                      }
+                      if (event.type == 'polygon') {     
+                        
+                          $.each(event.overlay.getPath().getArray(), function(key, latlng){
+                            var lat = latlng.lat();
+                            var lon = latlng.lng();   
+                            latlngdata.push({shapetype:'polygon',redius:0,lat:lat,lng:lon});
+                       
+                          });
+                        
+                      }
+                              
+                        google.maps.event.addListener(newShape, "click", function () {
+                          setSelection(newShape);
+                        });
+            
+                        setSelection(newShape);
+                      }
+                    }
+                  );
+            
+                  var centerControlDiv = document.createElement("div");
+                  var centerControl = new CenterControl(centerControlDiv, map);
+            
+                  centerControlDiv.index = 1;
+                  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
+                    centerControlDiv
+                  );
+                });
+              }
+             // google.maps.event.addDomListener(window, 'load', runMaps);
+            
+            };
+            function errormsg(msg){
+                $("#errormsg").html('');
+                $("#errormsg").append(`<span style="color:red">${msg}</span>`);
+            }
+          
+            function savaData(){
+              //console.log(latlngdata);
+             
+              if($("#areaname").val()==""){
+                errormsg("Please enter area name?")
+               
+              }else{
+                if(latlngdata.length<=0){
+                    errormsg("Please close popup and drag to new shape");
+                  
+                }
+                {
+                  var uniqueNumber=Math.floor(Math.random() * 1000000000);
+            
+                for(var x=0;x<latlngdata.length;x++){
+                latlngdata[x].AreaName=$("#areaname").val();
+                latlngdata[x].AreaNumber=uniqueNumber;
+              } 
+                      $.ajax({
+                              type: "POST",
+                              url: "http://15.207.162.5:3001/api/v1/addArea/",
+                              data:JSON.stringify({'myArray': latlngdata}),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                //  console.log(response);
+                                  latlngdata=[];
+                                 // deleteSelectedShape();
+                                  $("#areaname").val('');
+                                 // $(".md-modal").removeClass("md-show");
+                              },
+                              failure: function (msg) {
+                              //  console.log(msg);
+                                errormsg(msg);
+                              }
+                          });
+                 }            
+                            
+                }
+            }
+            // $("#form-mmap").on("click",function(){
+            //     $(".md-modal").addClass("md-show");
+            // })
+          
+            </script>
+
+        
+        <!-- END: JS Assets-->
+    </body>
+</html>

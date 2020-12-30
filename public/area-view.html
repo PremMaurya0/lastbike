@@ -1,0 +1,843 @@
+
+<!DOCTYPE html>
+<html lang="en" class="light">
+    <!-- BEGIN: Head -->
+    <head>
+        <meta charset="utf-8">
+        <link href="" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <title>Dashboard - Map UI</title>
+        <!-- BEGIN: CSS Assets-->
+        <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/app.css" />
+        <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/style.css" />
+        
+        <style>
+.gm-style-iw {
+	width: 350px !important;
+	top: 15px !important;
+	left: 0px !important;
+	background-color: #fff;
+	box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+	border: 1px solid rgba(72, 181, 233, 0.6);
+	border-radius: 2px 2px 10px 10px;
+}
+#iw-container {
+	margin-bottom: 10px;
+}
+#iw-container .iw-title {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 15px;
+	font-weight: 400;
+	padding: 7px;
+	background-color: #48b5e9;
+	color: white;
+	margin: 0;
+	border-radius: 2px 2px 0 0;
+}
+#iw-container .iw-content {
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: 400;
+	margin-right: 1px;
+	padding: 15px 5px 20px 15px;
+	max-height: 150px;
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+.iw-content img {
+	float: right;
+	margin: 0 5px 5px 10px;	
+}
+.iw-subTitle {
+	font-size: 12px;
+	font-weight: 700;
+	padding: 5px 0;
+}
+.iw-bottom-gradient {
+	position: absolute;
+	width: 326px;
+	height: 25px;
+	bottom: 10px;
+	right: 18px;
+	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+}
+
+        </style>
+        <!-- END: CSS Assets-->
+    </head>
+    <!-- END: Head -->
+    <body class="app">
+        <!-- BEGIN: Mobile Menu -->
+        <div class="mobile-menu md:hidden">
+            <div class="mobile-menu-bar">
+                <a href="" class="flex mr-auto">
+                    <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                </a>
+                <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
+            </div>
+            <ul class="border-t border-theme-24 py-5 hidden">
+                <li>
+                    <a href="dashboard.html" class="menu menu--active">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> Dashboard </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="tracking.html" class="menu">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> Tracking </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="menu">
+                        <div class="menu__icon"> <i data-feather="box"></i> </div>
+                        <div class="menu__title"> Vehicle <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    </a>
+                    <ul class="">                        
+                        <li>
+                            <a href="vehicle-list.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Vehicle List </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="vehicle-add.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Add Vehicle </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- END: Mobile Menu -->
+        <div class="flex">
+            <!-- BEGIN: Side Menu -->
+            <nav class="side-nav">
+                <a href="" class="intro-x flex items-center pl-5 pt-4">
+                    <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                    <span class="hidden xl:block text-white text-lg ml-3"> Map UI </span>
+                </a>
+                <div class=" my-6"></div>
+                <ul>
+                    <li>
+                        <a href="dashboard.html" class="side-menu side-menu--active">
+                            <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+                            <div class="side-menu__title"> Dashboard </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="5racking.html" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+                            <div class="side-menu__title"> Tracking </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="box"></i> </div>
+                            <div class="side-menu__title"> Vehicle <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                        </a>
+                        <ul class="">                            
+                            <li>
+                                <a href="vehicle-list.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Vehicle List </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="vehicle-add.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Add Vehicle </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="box"></i> </div>
+                            <div class="side-menu__title"> Area <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                        </a>
+                        <ul class="">                            
+                            <li>
+                                <a href="area-list.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Area List  </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="area-create.html" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="side-menu__title"> Create Area </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <!-- END: Side Menu -->
+            <!-- BEGIN: Content -->
+            <div class="content">
+                <!-- BEGIN: Top Bar -->
+                <div class="top-bar">
+                    <!-- BEGIN: Breadcrumb -->
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Area</a>  </div>
+                    <!-- END: Breadcrumb -->
+                    <!-- BEGIN: Search -->
+                    <!-- <div class="intro-x relative mr-3 sm:mr-6">
+                        <div class="search hidden sm:block">
+                            <input type="text" class="search__input input placeholder-theme-13" placeholder="Search...">
+                            <i data-feather="search" class="search__icon dark:text-gray-300"></i> 
+                        </div>
+                        <a class="notification sm:hidden" href=""> <i data-feather="search" class="notification__icon dark:text-gray-300"></i> </a>
+                        <div class="search-result">
+                            <div class="search-result__content">
+                                <div class="search-result__content__title">Pages</div>
+                                <div class="mb-5">
+                                    <a href="" class="flex items-center">
+                                        <div class="w-8 h-8 bg-theme-18 text-theme-9 flex items-center justify-center rounded-full"> <i class="w-4 h-4" data-feather="inbox"></i> </div>
+                                        <div class="ml-3">Mail Settings</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 bg-theme-17 text-theme-11 flex items-center justify-center rounded-full"> <i class="w-4 h-4" data-feather="users"></i> </div>
+                                        <div class="ml-3">Users & Permissions</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full"> <i class="w-4 h-4" data-feather="credit-card"></i> </div>
+                                        <div class="ml-3">Transactions Report</div>
+                                    </a>
+                                </div>
+                                <div class="search-result__content__title">Users</div>
+                                <div class="mb-5">
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        </div>
+                                        <div class="ml-3">Al Pacino</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">alpacino@left4code.com</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        </div>
+                                        <div class="ml-3">Al Pacino</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">alpacino@left4code.com</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        </div>
+                                        <div class="ml-3">Denzel Washington</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">denzelwashington@left4code.com</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        </div>
+                                        <div class="ml-3">Denzel Washington</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">denzelwashington@left4code.com</div>
+                                    </a>
+                                </div>
+                                <div class="search-result__content__title">Products</div>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-9.jpg">
+                                    </div>
+                                    <div class="ml-3">Samsung Galaxy S20 Ultra</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">Smartphone &amp; Tablet</div>
+                                </a>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-10.jpg">
+                                    </div>
+                                    <div class="ml-3">Samsung Q90 QLED TV</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">Electronic</div>
+                                </a>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-13.jpg">
+                                    </div>
+                                    <div class="ml-3">Apple MacBook Pro 13</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">PC &amp; Laptop</div>
+                                </a>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-2.jpg">
+                                    </div>
+                                    <div class="ml-3">Nikon Z6</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">Photography</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- END: Search -->
+                    <!-- BEGIN: Notifications -->
+                    <div class="intro-x dropdown mr-auto sm:mr-6">
+                        <div class="dropdown-toggle notification notification--bullet cursor-pointer"> <i data-feather="bell" class="notification__icon dark:text-gray-300"></i> </div>
+                        <div class="notification-content pt-2 dropdown-box">
+                            <div class="notification-content__box dropdown-box__content box dark:bg-dark-6">
+                                <div class="notification-content__title">Notifications</div>
+                                <div class="cursor-pointer relative flex items-center ">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem </div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi</div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Denzel Washington</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi</div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Denzel Washington</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500</div>
+                                    </div>
+                                </div>
+                                <div class="cursor-pointer relative flex items-center mt-5">
+                                    <div class="w-12 h-12 flex-none image-fit mr-1">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-8.jpg">
+                                        <div class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="ml-2 overflow-hidden">
+                                        <div class="flex items-center">
+                                            <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a> 
+                                            <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">05:09 AM</div>
+                                        </div>
+                                        <div class="w-full truncate text-gray-600">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Notifications -->
+                    <!-- BEGIN: Account Menu -->
+                    <div class="intro-x dropdown w-8 h-8">
+                        <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in">
+                            <img alt="Midone Tailwind HTML Admin Template" src="dist/images/profile-3.jpg">
+                        </div>
+                        <div class="dropdown-box w-56">
+                            <div class="dropdown-box__content box bg-theme-38 dark:bg-dark-6 text-white">
+                                <div class="p-4 border-b border-theme-40 dark:border-dark-3">
+                                    <div class="font-medium">User</div>
+                                    <div class="text-xs text-theme-41 dark:text-gray-600">Email@gmail.com</div>
+                                </div>
+                                <div class="p-2">
+                                    <!-- <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
+                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account </a> -->
+                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
+                                    <!-- <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help </a> -->
+                                </div>
+                                <div class="p-2 border-t border-theme-40 dark:border-dark-3">
+                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Account Menu -->
+                </div>
+                <!-- END: Top Bar -->
+                <div class="intro-y flex items-center mt-8">
+                    <h2 class="text-lg font-medium mr-auto mb-5">
+                        View Area
+                    </h2>
+                </div>
+                <div class="grid grid-cols-12 gap-6">                    
+                    <div class="intro-y col-span-8 lg:col-span-8 ">                        
+                        <div id="map"></div>
+                        
+                    </div>
+                    <div class="intro-y col-span-4 lg:col-span-4 ">
+                        <h2 class="text-lg font-medium mr-auto  mb-5">
+                            Bike List
+                        </h2>
+                        <div class="intro-y flex items-center">
+                           
+                            
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <input type="text" id="deviceid" class="input border flex-1" style="width: 63%;" placeholder="Device ID">
+                                    <button type="button" id="filterdata" class="button w-24 mr-1 mb-2 bg-theme-1 text-white">Apply</button>
+                                    <button type="button" id="cleardata" class="button w-24 mr-1 mb-2 bg-theme-1 text-white">Clear</button>
+                                </div>
+                           
+                        </div>
+                        <div id="bikesearch" class="w-full hi-ctrl scrollbar" style="display:none;"></div>
+                        <div id="bikelisting" class="w-full hi-ctrl scrollbar" style="display:block;">
+                            <!-- <div class="box">
+                                <div class="flex flex-col lg:flex-row items-center p-5 pb-0 border-b border-gray-200 dark:border-dark-5">
+                                    <div class=" lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
+                                        <a href="" class="font-medium">DBI C1 2545</a> 
+                                        <div class="text-gray-600 text-xs">4545454</div>
+                                    </div>
+                                    <div class="flex -ml-2 lg:ml-0 lg:justify-end mt-3 lg:mt-0">
+                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border dark:border-dark-5 ml-2 text-theme-9 zoom-in tooltip" title="Active"> <i class="w-3 h-3 fill-current" data-feather="stop-circle"></i> </a>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap lg:flex-no-wrap items-center justify-center p-5">
+                                    <div class="w-full lg:w-1/4 mb-0 lg:mb-0 mr-auto">
+                                        <div class="flex">
+                                            <div class="text-gray-600 text-xs mr-auto">Speed</div>
+                                            <div class="text-xs font-medium">20</div>
+                                        </div>
+                                    </div>
+                                    <a class="flex items-center mr-3 md-trigger" data-modal="modal-12" href="#"> <i data-feather="eye" class="w-4 h-4 mr-1"></i> View </a>
+                                    
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                    <!-- <button class="button mr-1 mb-2 bg-theme-1 text-white mr-2 md-trigger" data-modal="modal-12">Show modal</button> -->
+                    <div class="md-modal md-effect-12 bg-white">
+                        <div class="md-content">
+                            <div class="grid grid-cols-12 gap-6 mt-8">
+                                <div class="intro-y col-span-12 lg:col-span-12">
+                                    <div class="px-5">
+                                        <h2 class="text-lg font-medium mr-auto">
+                                            Driver Detaile
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <div class="px-5">
+                                        <div class="font-medium">Name</div> 
+                                        <div class="flex text-gray-600 truncate text-xs mt-1">Ali rahman khan </div>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <div class="px-5">
+                                        <div class="font-medium">Contact No.</div> 
+                                        <div class="flex text-gray-600 truncate text-xs mt-1">+971 54125455 </div>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-12">
+                                    <div class="px-5">
+                                        <h2 class="text-lg font-medium mr-auto">
+                                            Vehicle Detaile
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <div class="px-5">
+                                        <div class="font-medium">Device ID</div> 
+                                        <div class="flex text-gray-600 truncate text-xs mt-1">	dfd4545 </div>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <div class="px-5">
+                                        <div class="font-medium">Vehicle type</div> 
+                                        <div class="flex text-gray-600 truncate text-xs mt-1">2 wheeler </div>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <div class="px-5">
+                                        <div class="font-medium">Model name</div> 
+                                        <div class="flex text-gray-600 truncate text-xs mt-1">2020 </div>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <div class="px-5">
+                                        <div class="font-medium">Vehicle No.</div> 
+                                        <div class="flex text-gray-600 truncate text-xs mt-1">DBI25 2545 </div>
+                                    </div>
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-6">
+                                    <div class="px-5">
+                                        <div class="font-medium">Chassis No.</div> 
+                                        <div class="flex text-gray-600 truncate text-xs mt-1">45464 </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-12 lg:col-span-12 items-center text-center">
+                                    <button type="button" onclick="closeview()" class="button w-24 mr-1 mb-2 bg-theme-1 text-white md-close">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-overlay"></div>
+                        
+                </div>
+            </div>
+            <!-- END: Content -->
+        </div>
+        
+        <!-- END: Dark Mode Switcher-->
+        <!-- BEGIN: JS Assets-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+        <script src="http://chintansareen.com/demo/MapUI/dist/js/app.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZIIPkxUOhnlEUuegCFhDUpcAvTQIXozs&callback=initMap&libraries=drawing&v=weekly" defer></script>
+        <script src="http://chintansareen.com/demo/MapUI/socket.io.js"></script>
+  <script>
+  var Coords=[],bikeListData=[],shapename;
+  const socket = io('http://15.207.162.5:3001/',{'forceNew':true, query: "foo="+getParameterByName("area") });
+        socket.on('connect',function(data) {    
+            console.log("Server is connected");
+        });
+        $("#cleardata").hide();;
+        $("#filterdata").on("click",function(){
+            filterData(getParameterByName("area"),$("#deviceid").val());
+            $("#cleardata").show();
+            $("#filterdata").hide();
+        });
+        $("#cleardata").on("click",function(){
+            $("#filterdata").show();
+            $("#cleardata").hide();
+            $("#deviceid").val('');
+            $("#bikelisting").show();
+            $("#bikesearch").html('');
+            $("#bikesearch").hide();
+                  
+        })
+  function filterData(areaname,deviceid){
+    $.ajax({
+                  type: "Post",
+                  url: "http://15.207.162.5:3001/api/v1/vechilesinglearea",
+                  data:{"area":areaname,"deviceId":deviceid},
+                  success: function (response) {
+                   // console.log(response.length);
+                    $("#bikelisting").hide();
+                   $("#bikesearch").show();
+                  
+                   
+                    if(response.length>0){
+
+                        var html='';
+                      if(response[0].status_command=="BikeStop"){
+                        html+=`<span  id="Bike${response[0].DeviceId}"><a class="flex items-center mr-3" style="background:gray; line-height: 20px;padding: 6px;">Loding...</a></span>`;
+                      }else{
+                        html+=`<span  id="Bike${response[0].DeviceId}"><a class="flex items-center mr-3" style="background: gray; line-height: 20px;padding: 6px;">Loding...</a></span>`;
+                      }
+                      $("#bikesearch").append(`
+                             <div class="box mt-4">
+                                <div class="flex flex-col lg:flex-row items-center p-5 pb-0 border-b border-gray-200 ">
+                                    <div class=" lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
+                                        <a href="" class="font-medium">DeviceID: ${response[0].DeviceId}</a> 
+                                        <div class="text-gray-600 text-xs">Vechile Number: ${response[0].vechileNumber} </div>
+                                    </div>
+                                    <div class="flex -ml-2 lg:ml-0 lg:justify-end mt-3 lg:mt-0">
+                                        <span> Speed : 40/KM</span>
+                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border  ml-2 text-theme-6 zoom-in tooltip" title="Active"> <i class="w-3 h-3 fill-current" data-feather="stop-circle"></i> </a>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap lg:flex-no-wrap items-center justify-center p-5">
+                                   
+                                    ${html}
+                                    <span id=${response[0].DeviceId}><span style="padding: 7px;font-size: 15px; background: bisque; line-height: 15px; margin-left: 37px;">Loding...</span></span> 
+                                    <a class="flex items-center mr-3 md-trigger"  onClick="view(${response[0].DeviceId})"> <i data-feather="eye" class="w-4 h-4 mr-1"></i> View </a>
+                                </div>
+                            </div>
+                       `);
+
+                    }else{
+                        $("#bikesearch").append(` <div class="box mt-4">Record Not Found</div>`);
+                    }
+                  
+                   
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                   // reject(msg);
+                  }
+              });
+            
+
+
+
+  }
+function areaSingle(areaname){
+  return new Promise((resolve, reject) => {
+            $.ajax({
+                  type: "Post",
+                  url: "http://15.207.162.5:3001/api/v1/areaSingle",
+                  data:{"areanumber":areaname},
+                  success: function (response) {
+                   
+                    Coords=[];
+                    shapename=response.shapetype;
+                    for(var x=0;x<response.List.length;x++){
+                      Coords.push({lat:parseFloat(response.List[x].lat),lng:parseFloat(response.List[x].lng)})
+                    }
+                     $.ajax({
+                  type: "Post",
+                  url: "http://15.207.162.5:3001/api/v1/vechileareaList",
+                  data:{"area":areaname},
+                  success: function (response) {
+                   //console.log(response);
+                   $("#bikelisting").html('');
+                    bikeListData=[];
+                    //shapename=response.shapetype;
+                    for(var x=0;x<response.length;x++){
+                      bikeListData.push({lat:parseFloat(response[x].lat),lng:parseFloat(response[x].lng)});
+                      var html='';
+                      if(response[x].status_command=="BikeStop"){
+                        html+=`<span  id="Bike${response[x].DeviceId}"><a class="flex items-center mr-3" style="background:gray; line-height: 20px;padding: 6px;">Loding...</a></span>`;
+                      }else{
+                        html+=`<span  id="Bike${response[x].DeviceId}"><a class="flex items-center mr-3" style="background: gray; line-height: 20px;padding: 6px;">Loding...</a></span>`;
+                      }
+                      $("#bikelisting").append(`
+                             <div class="box mt-4">
+                                <div class="flex flex-col lg:flex-row items-center p-5 pb-0 border-b border-gray-200 ">
+                                    <div class=" lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
+                                        <a href="" class="font-medium">DeviceID: ${response[x].DeviceId}</a> 
+                                        <div class="text-gray-600 text-xs">Vechile Number: ${response[x].vechileNumber} </div>
+                                    </div>
+                                    <div class="flex -ml-2 lg:ml-0 lg:justify-end mt-3 lg:mt-0">
+                                        <span> Speed : 40/KM</span>
+                                        <a href="" class="w-8 h-8 rounded-full flex items-center justify-center border  ml-2 text-theme-6 zoom-in tooltip" title="Active"> <i class="w-3 h-3 fill-current" data-feather="stop-circle"></i> </a>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap lg:flex-no-wrap items-center justify-center p-5">
+                                   
+                                    ${html}
+                                    <span id=${response[x].DeviceId}><span style="padding: 7px;font-size: 15px; background: bisque; line-height: 15px; margin-left: 37px;">Loding...</span></span> 
+                                    <a class="flex items-center mr-3 md-trigger"  onClick="view(${response[x].DeviceId})"> <i data-feather="eye" class="w-4 h-4 mr-1"></i> View </a>
+                                </div>
+                            </div>
+            `);
+
+                    }
+                    resolve(response);
+                  
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                   // reject(msg);
+                  }
+              });
+            
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                    reject(msg);
+                  }
+              });
+            });
+        }
+
+     
+let map;
+
+function initMap() {
+  
+if(Coords.length<=0){
+//modal.style.display = "block";
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 8,
+    center: { lat: 28.6139, lng:77.2090 },
+    mapTypeId: "terrain",
+  });
+}
+ 
+}
+var newBikelist=[];
+
+var markers=[];
+function initMap2(){
+   
+ // if(Coords.length>0){
+  //modal.style.display = "none";
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 7,
+    center: { lat: Coords[0].lat, lng:Coords[0].lng },
+    mapTypeId: "terrain",
+  });
+
+  if(shapename=="polygon"){
+
+const region = new google.maps.Polygon({
+map: map,
+clickable: false,
+paths: Coords,
+});
+
+
+var bounds = new google.maps.LatLngBounds();
+for (var i = 0; i < region.getPath().getLength(); i++) {
+bounds.extend(region.getPath().getAt(i));
+}
+map.fitBounds(bounds);
+
+}
+else{
+    
+    var latlng=new google.maps.LatLng(Coords[0].lat, Coords[0].lng);
+    const cityCircle = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      radius: 100000,
+      fillOpacity: 0.35,
+      map,
+      center: Coords[0],
+      //radius: Math.sqrt(citymap[city].population) * 1000,
+    });
+   
+    var bounds = cityCircle.getBounds();
+
+  }
+
+  socket.on('bikeList',response=>{
+      
+          newBikelist=[]; 
+           
+          DeleteMarkers(); 
+          
+         for(var x=0;x<response.length;x++){
+
+              newBikelist.push({DeviceId:response[x].DeviceId,status_command:response[x].status_command,vechileNumber:response[x].vechileNumber, lat:parseFloat(response[x].lat),lng:parseFloat(response[x].lng)});            
+                    $("#Bike"+newBikelist[x].DeviceId).html('');
+                      if(response[x].status_command=="BikeStop"){
+                        $("#Bike"+newBikelist[x].DeviceId).append(`<a class="flex items-center mr-3" onClick="bikecommand(${response[x].DeviceId},'BikeStart')" style="background:greenyellow; line-height: 20px;padding: 6px;">Bike Start</a>`);
+                      }else{
+                        $("#Bike"+newBikelist[x].DeviceId).append(`<a class="flex items-center mr-3" onClick="bikecommand(${response[x].DeviceId},'BikeStop')" style="background:  blanchedalmond; line-height: 20px;padding: 6px;">Bike Stop</a>`);
+                      }
+          }
+  
+      for(var x=0;x<newBikelist.length;x++){ 
+    
+        if(newBikelist[x].status_command == 'BikeStart'){
+        var icon_img = "http://maps.google.com/mapfiles/ms/icons/green-dot.png" ;
+        } else {
+         var icon_img = "http://maps.google.com/mapfiles/ms/icons/red-dot.png" ;
+         }
+       var marker = new google.maps.Marker({
+          map: map,
+          draggable:false,
+          position: new google.maps.LatLng(newBikelist[x].lat,newBikelist[x].lng),
+          id:newBikelist[x].DeviceId,
+          title:newBikelist[x].vechileNumber,
+          icon: { 
+             url : icon_img,
+             scaledSize : new google.maps.Size(40, 40),
+            }
+        });
+      
+       $("#"+newBikelist[x].DeviceId).html('');
+       
+       $("#"+newBikelist[x].DeviceId).append('<span style="color:green; padding: 7px;font-size: 15px; background:lightgreen; line-height: 15px; margin-left: 37px;">Bike Inside</span>');
+        if(bounds.contains(new google.maps.LatLng(newBikelist[x].lat,newBikelist[x].lng))==false){
+            $("#"+marker.id).html('');
+            $("#"+marker.id).append('<span style="color: red; padding:7px;font-size: 15px; background: bisque;line-height: 15px; margin-left: 37px;">Bike Outside</span>');
+              // InfoWindow content
+              var content = '<div id="iw-container">' +
+                    '<div class="iw-title">OutSide Area</div>' +
+                    '<div class="iw-content">' +
+                      '<div class="iw-subTitle">Bike Details</div>' +
+                       '<p>Device ID : '+marker.id+'</p>' +
+                       '<p>Vechile Number : '+marker.title+'</p>' +
+                       '<p>Driver Name: Test Driver ,Phone. +351 234 320 600</p>'+
+                      
+                  '</div>';
+                  var infowindow = new google.maps.InfoWindow({
+                    content: content,
+                    maxWidth: 350
+                  });
+                  infowindow.open(map,marker);
+                  range='Outside';
+               }
+             markers.push(marker);
+             
+       }
+  
+   });
+  
+}
+//calculates distance between two points in km's
+function calcDistance(p1, p2) {
+  return (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
+}
+
+function DeleteMarkers() {
+        //Loop through all the markers and remove
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];
+    };
+
+
+function view(deviceId){
+console.log(deviceId);
+$('.md-modal').addClass('md-show');
+};
+
+function bikecommand(deviceId,command_bike){
+// console.log(deviceId);
+// console.log(command_bike);
+                  $.ajax({
+                    url     : 'http://15.207.162.5:3001/api/v1/newupdateStatus',
+                    type    : 'Post',
+                    data    : { "gsmmobile" : deviceId, "bikestatus" : command_bike },
+                    success : function(dataresult) {
+                        if(dataresult == 'Update Data' ) {
+                            console.log("Successfully!!")
+                           $("#Bike"+deviceId).html('');
+                            $("#Bike"+deviceId).append(`<a class="flex items-center mr-3" style="background: blanchedalmond; line-height: 20px;padding: 6px;">Wait..</a>`);
+                        } else {
+                            console.log("Something missing!!")
+                       }
+                    }
+                });
+
+};
+
+function closeview(){
+
+$('.md-modal').removeClass('md-show');
+}
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+areaSingle(getParameterByName("area")).then(initMap2);
+
+  </script>
+        <!-- END: JS Assets-->
+    </body>
+</html>
