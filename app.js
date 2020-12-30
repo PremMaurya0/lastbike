@@ -13,7 +13,7 @@ require("./DbConnection");
 //Route Define
 //var byke = require('./routes/bike')(app,io);
 var area = require('./routes/areaManage')();
-var vechile = require('./routes/vechileManage')(io);
+var vechile = require('./routes/vechileManage')(app,io);
 //var testapp = require('./routes/test');
 //var testsocket = require('./routes/testsocket')(io);
 

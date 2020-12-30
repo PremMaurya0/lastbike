@@ -5,7 +5,7 @@ var _=require("underscore");
 var cron = require('node-cron');
 const payload=require('./payload');
 
-module.exports=function(io){
+module.exports=function(deviceKey,io){
 
     router.post('/v1/addVechile', function(req, res) {
 

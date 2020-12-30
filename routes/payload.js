@@ -1,6 +1,6 @@
 var payload = {
     google_payloaddataByPrem :function(deviceKey,req,callback){
-       // console.log(req.query);
+        console.log(req.query);
        if(req.query!=undefined){
            if(req.query.bykelat==undefined && req.query.bykelong==undefined && req.query.bykemobile==undefined && req.query.byketime==undefined&& req.query.bykedate==undefined){
             //console.log("1")
