@@ -139,7 +139,7 @@ module.exports=function(deviceKey,io){
     router.post('/v1/requests', function(req, res) {
       
       payload.google_payloaddataByPrem(deviceKey,req,(requestDevice)=>{
-        console.log(requestDevice);
+     //   console.log(requestDevice);
           
           if(requestDevice=="400"){
              

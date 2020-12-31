@@ -37,8 +37,8 @@ var vechileManagement = {
                 });
          },
          vechileUpdate:function(obj,callback){
-             var sqlquery = "UPDATE vechile set areaId=?,lat=?,lng=?,status=1 WHERE id = ?";   
-                         db.query(sqlquery,[obj.areaId,obj.lat,obj.lng,obj.id], function (error,result) {
+             var sqlquery = "UPDATE vechile set areaId=?,lat=?,lng=?,Prevlat=?,Prevlng=?,status=1 WHERE id = ?";   
+                         db.query(sqlquery,[obj.areaId,obj.lat,obj.lng,obj.lat,obj.lng,obj.id], function (error,result) {
                             if (error) {
                                callback(error,null);
                               }
@@ -115,15 +115,17 @@ var vechileManagement = {
                    if(obj.deviceKey=="Prem_Maurya"){
                  //  console.log(obj);
                       var number=obj.datamobile;
-                       var sqlquery = "select DeviceId from vechile WHERE DeviceId = ?";
+                       var sqlquery = "select DeviceId,lat,lng from vechile WHERE DeviceId = ?";
                        db.query(sqlquery,[number], function (error,results) {
                            if (error) {
                            callback(error,null);
                            }
-                           else{                 
+                           else{  
+                                             
                                if(results.length){
-                                   var sqlquery = "UPDATE vechile set lat=? , lng =? WHERE DeviceId = ?";
-                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,number], function (error,result) {
+
+                                   var sqlquery = "UPDATE vechile set lat=? , lng =?,Prevlat=? , Prevlng =? WHERE DeviceId = ?";
+                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,results[0].lat,results[0].lng,number], function (error,result) {
                                            if (error) {
                                             callback(error,null);
                                             }
@@ -131,6 +133,7 @@ var vechileManagement = {
                                              callback('update record!',null);
                                            }
                                     });
+
                                }
                                else{
                                    callback('Mobile Number is not registered!',null);

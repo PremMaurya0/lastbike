@@ -11,8 +11,12 @@
         <meta name="author" content="">
         <title>Dashboard - Map UI</title>
         <!-- BEGIN: CSS Assets-->
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZIIPkxUOhnlEUuegCFhDUpcAvTQIXozs&callback=initMap&libraries=drawing&v=weekly"
+        defer
+      ></script>
         <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/app.css" />
-       
+        <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/style.css" />
         <!-- END: CSS Assets-->
     </head>
     <!-- END: Head -->
@@ -130,7 +134,7 @@
                 <!-- BEGIN: Top Bar -->
                 <div class="top-bar">
                     <!-- BEGIN: Breadcrumb -->
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Area</a> </div>
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Vehicle</a> </div>
                     <!-- END: Breadcrumb -->
                     <!-- BEGIN: Search -->
                     <!-- <div class="intro-x relative mr-3 sm:mr-6">
@@ -323,23 +327,13 @@
                 <!-- END: Top Bar -->
                 <div class="intro-y flex items-center mt-8">
                     <h2 class="text-lg font-medium mr-auto">
-                        Area list
+                        Vehicle list
                     </h2>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-                        <button onclick="location.href='area-create.html'" class="button w-24 mr-1 mb-2 bg-theme-1 text-white mr-2">Add New</button>
-                        <!-- <div class="dropdown">
-                            <button class="dropdown-toggle button px-2 box text-gray-700 dark:text-gray-300">
-                                <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
-                            </button>
-                            <div class="dropdown-box w-40">
-                                <div class="dropdown-box__content box dark:bg-dark-1 p-2">
-                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Add Group </a>
-                                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="message-circle" class="w-4 h-4 mr-2"></i> Send Message </a>
-                                </div>
-                            </div>
-                        </div> -->
+                        <button onclick="location.href='vehicle-add.html'" class="button w-24 mr-1 mb-2 bg-theme-1 text-white mr-2">Add New</button>
+                       
                         <!-- <div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>
                         <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                             <div class="w-56 relative text-gray-700 dark:text-gray-300">
@@ -348,22 +342,29 @@
                             </div>
                         </div> -->
                     </div>
-                    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-                        <table class="table table-report -mt-2">
-                            <thead>
-                                <tr>
-                                    <th class="whitespace-no-wrap">Area ID</th>
-                                    <th class="whitespace-no-wrap">Area Name</th>
-                                    <th class="text-center whitespace-no-wrap">No. of Bike</th>
-                                    <th class="text-center whitespace-no-wrap">Activa bike</th>
-                                    <th class="text-center whitespace-no-wrap">Inactiva bike</th>
-                                    <th class="text-center whitespace-no-wrap">ACTIONS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              
-                            </tbody>
-                        </table>
+                    <div class="intro-y col-span-12 lg:col-span-12">
+                        <div class="p-5 box" id="responsive-table">
+                            <div class="preview">
+                                <div class="overflow-x-auto">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th class="border-b-2 dark:border-dark-5 whitespace-no-wrap">Device ID</th>
+                                                <th class="border-b-2 dark:border-dark-5 whitespace-no-wrap">Model name</th>
+                                                <th class="border-b-2 dark:border-dark-5 whitespace-no-wrap">Vehicle  No.</th>
+                                                <th class="border-b-2 dark:border-dark-5 whitespace-no-wrap">Chassis No.</th>
+                                                <th class="border-b-2 dark:border-dark-5 whitespace-no-wrap">Assign Area</th>
+                                                <th class="border-b-2 dark:border-dark-5 whitespace-no-wrap">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-no-wrap items-center text-center">
                         <ul class="pagination box">
@@ -386,75 +387,358 @@
                             </li>
                         </ul>
                     </div> -->
-                    <div class="modal" id="delete-confirmation-modal">
-                        <div class="modal__content">
-                            <div class="p-5 text-center">
-                                <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i> 
-                                <div class="text-3xl mt-5">Are you sure?</div>
-                                <div class="text-gray-600 mt-2">Do you really want to delete these records? This process cannot be undone.</div>
-                            </div>
-                            <div class="px-5 pb-8 text-center">
-                                <button type="button" data-dismiss="modal" class="button w-24 border text-gray-700 mr-1">Cancel</button>
-                                <button type="button" class="button w-24 bg-theme-6 text-white">Delete</button>
+               
+               
+
+                    <div class="md-modal md-effect-12 bg-white">
+                        <div class="md-content">
+                            <div class="grid grid-cols-12 gap-6 mt-8">
+                                <div class="intro-y col-span-12 lg:col-span-12">
+                                    <div class="px-5">
+                                        <h2 class="text-lg font-medium mr-auto">
+                                            Select Area
+                                        </h2>
+                                    </div>
+                                </div>
+                                
+                                <div class="intro-y col-span-12">
+                                    
+                                <select class="input w-full border flex-1" id="mySelect" onchange="getSelectValue()">
+                                 
+                                </select>
+                    
+                                </div>
+                                <div class="intro-y col-span-12 lg:col-span-12" id="errormsg" style="display:none; text-align: center;color:red">
+                                   
+                                    </div>
+                                <div class="intro-y col-span-12" >
+                                    <div id="map" style="height: 300px;"></div>
+                                </div>
+                                <div class="col-span-12 lg:col-span-12 items-center text-center">
+                                    <button type="button" onclick="closeview()" class="button w-24 mr-1 mb-2 bg-theme-1 text-white md-close">Close</button>
+                                    <button type="button" id="savedata" class="button w-24 mr-1 mb-2 bg-theme-1 text-white md-close">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="md-overlay"></div>
+                        
                 </div>
             </div>
             <!-- END: Content -->
         </div>
         
         <!-- END: Dark Mode Switcher-->
-       
+        <!-- BEGIN: JS Assets-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="http://chintansareen.com/demo/MapUI/dist/js/app.js"></script>
         <script src="https://unpkg.com/feather-icons@4.28.0/dist/feather.min.js"></script>
+        <!-- END: JS Assets-->
         <script>
-
-            function areaList(){
-                $.ajax({
-                      type: "GET",
-                      url: "http://15.207.162.5:3001/api/v1/areaList",
-                      data:{},
-                      contentType: "application/json; charset=utf-8",
-                      dataType: "json",
-                      success: function (response) {
-                          console.log(response);
-                          $("#table > tbody").html('');
-                          if(response.areaList.length>0){
-                          for(var x=0;x<response.areaList.length;x++){
-       
+              
+            
+            var areaNumber,byikid,lat,lng;
+                    function vechileList(){
+                        $.ajax({
+                              type: "GET",
+                              url: "http://15.207.162.5:3001/api/v1/vechileList",
+                              data:{},
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                  console.log(response);
+                                $("table >tbody").html('');
+                                var html;  
+                                if(response.length>0){
+                                  for(var x=0;x<response.length;x++){
+                                      html='';
+                                      if(response[x].status==0){
+                                        html+="<input type='button' style='cursor: pointer ;padding: 10px; background: #72bf86;' onclick='getdata("+response[x].id.toString()+")' value='Assign Area' />";
+                                      }else{
+                                        html+="<input type='button' style='cursor: pointer; padding: 10px; background: khaki;' onclick='getdata("+response[x].id.toString()+")' value='Re-assign Area' />";
+                                     
+                                      }
+                                      $("table >tbody").append(`
+                                      <tr>
+                                               <td class="border-b whitespace-no-wrap">${response[x].DeviceId}</td>
+                                                <td class="border-b whitespace-no-wrap">${response[x].vechileNumber}</td>
+                                                <td class="border-b whitespace-no-wrap">${response[x].modelname}</td>
+                                                <td class="border-b whitespace-no-wrap">${response[x].chissisnumber}</td>
+                                                <td class="border-b whitespace-no-wrap" style="cursor: pointer;">${html}</td>
+                                                <td class="border-b whitespace-no-wrap">
+                                                    <button class="button px-2 mr-1 mb-2 bg-theme-3 text-white">
+                                                        <span class="w-5 h-5 flex items-center justify-center"> <i data-feather="eye" class="w-4 h-4"></i></span>
+                                                    </button> 
+                                                    <button class="button px-2 mr-1 mb-2 bg-theme-1 text-white">
+                                                        <span class="w-5 h-5 flex items-center justify-center"> <i data-feather="edit" class="w-4 h-4"></i></span>
+                                                    </button> 
+                                                    <button class="button px-2 mr-1 mb-2 bg-theme-6 text-white">
+                                                        <span class="w-5 h-5 flex items-center justify-center"> <i data-feather="trash" class="w-4 h-4"></i> </span>
+                                                    </button>
+                                                </td>
+                                            </tr>    
+                                      `);
+                                      feather.replace();
+                                    
+                                  }
+                                }else{
+                                    $("table >tbody").append(`<tr>
+                                    <td collspan="3">Records Not Found!!</td></tr>`)
+                                }
+                                  
+                              },
+                              failure: function (msg) {
+                                console.log(msg);
+                              }
+                          });
+                    }
+                    vechileList();
+                    function getdata(id){
+                        byikid=id;
+                        $('.md-modal').addClass('md-show');
+                    }
+                 
+                  function areaList(){
+                        $.ajax({
+                              type: "GET",
+                              url: "http://15.207.162.5:3001/api/v1/areaList",
+                              data:{},
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                 // console.log(response);
+                                  $("#mySelect").html('');
+                                  if(response.areaList.length>0){
+                                    $('#mySelect').append($('<option>', { 
+                                        value: 0,
+                                        text :"Select Area" ,
+                                     }));
+                                  for(var x=0;x<response.areaList.length;x++){
+                                    $('#mySelect').append($('<option>', { 
+                                        value: response.areaList[x].AreaNumber,
+                                        text : response.areaList[x].AreaName 
+                                    }));
+                                   
+                                  }
+                                }
+                              
+                                  
+                              },
+                              failure: function (msg) {
+                                console.log(msg);
+                              }
+                          });
+                    }
+                    areaList();
+            
+                    function getSelectValue()
+                    {
+                        var selectedValue = document.getElementById("mySelect").value;
+                      //  alert(selectedValue);
+                      $("#errormsg").html('');
+                      $("#errormsg").hide('');
+                        areaNumber=selectedValue;
+                        areaSingle(selectedValue).then(initMap2);
+                    }
+            
+            
+            
+                 
+              var Coords=[],shapename;
+            function areaSingle(areaname){
+              return new Promise((resolve, reject) => {
+                        $.ajax({
+                              type: "Post",
+                              url: "http://15.207.162.5:3001/api/v1/areaSingle",
+                              data:{"areanumber":areaname},
+                              success: function (response) {
                                
-                            $("table > tbody").append(`<tr class="intro-x">
-                                    <td class="">${response.areaList[x].AreaNumber}</td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-no-wrap">${response.areaList[x].AreaName}</a> 
-                                      
-                                    </td>
-                                    <td class="text-center">82</td>
-                                    <td class="text-center">40</td>
-                                    <td class="text-center">42</td>
-                                    <td class="table-report__action w-56">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="area-view.html?area=${response.areaList[x].AreaNumber}"> <i data-feather="eye" class="w-4 h-4 mr-1"></i> View </a>
-                                            <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                                        </div>
-                                    </td>
-                                </tr>`);
-                                feather.replace();
-                          }
-                        }else{
-                            $("table > tbody").append(`<tr class="intro-x">
-                                    <td collspan="6">Record Not found!!</td></tr>`)
-                        }
-                          
-                      },
-                      failure: function (msg) {
-                        console.log(msg);
-                      }
-                  });
+                                Coords=[];
+                                shapename=response.shapetype;
+                                for(var x=0;x<response.List.length;x++){
+                                  Coords.push({lat:parseFloat(response.List[x].lat),lng:parseFloat(response.List[x].lng)})
+                                }
+                                resolve(response.shapetype);
+                               
+                              },
+                              failure: function (msg) {
+                                console.log(msg);
+                                reject(msg);
+                              }
+                          });
+                        });
+                    }
+            
+            
+            // This example creates a simple polygon representing the Bermuda Triangle.
+            // When the user clicks on the polygon an info window opens, showing
+            // information about the polygon's coordinates.
+            
+            let map;
+            
+            function initMap() {
+            
+              map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 8,
+                center: { lat: 28.6139, lng:77.2090 },
+                mapTypeId: "terrain",
+              });
+            
+             
+            
             }
-            areaList();
-        </script>
+            
+            function initMap2(){
+             
+              map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 7,
+                center: { lat: Coords[0].lat, lng:Coords[0].lng },
+                mapTypeId: "terrain",
+              });
+             
+              if(shapename=="polygon"){
+            
+                const region = new google.maps.Polygon({
+                map: map,
+                clickable: false,
+                paths: Coords,
+                });
+            
+            
+              var bounds = new google.maps.LatLngBounds();
+              for (var i = 0; i < region.getPath().getLength(); i++) {
+                bounds.extend(region.getPath().getAt(i));
+              }
+              map.fitBounds(bounds);
+               var marker = new google.maps.Marker({
+                map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: { lat: Coords[0].lat, lng:Coords[0].lng },
+              });
+              marker.addListener("onload", toggleBounce);
+                
+                google.maps.event.addListener(marker, 'dragend', function (marker) {
+                    if(bounds.contains(new google.maps.LatLng(marker.latLng.lat(), marker.latLng.lng()))==true){
+                    console.log(marker.latLng.lat(), marker.latLng.lng());
+                    lat=marker.latLng.lat();
+                    lng=marker.latLng.lng();
+                  }else{
+                    $("#errormsg").show();
+                    console.log(marker.latLng.lat(), marker.latLng.lng());
+                    $("#errormsg").html('');
+                    $("#errormsg").append(`<span>Not Data Save Because your bike is out of area</span>`);
+                  }
+                });   
+             
+              }else{
+                
+                var latlng=new google.maps.LatLng(Coords[0].lat, Coords[0].lng);
+                const cityCircle = new google.maps.Circle({
+                  strokeColor: "#FF0000",
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: "#FF0000",
+                  radius: 100000,
+                  fillOpacity: 0.35,
+                  map,
+                  center: Coords[0],
+                  //radius: Math.sqrt(citymap[city].population) * 1000,
+                });
+             
+                var bounds = cityCircle.getBounds();
+                var marker = new google.maps.Marker({
+                map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: { lat: Coords[0].lat, lng:Coords[0].lng },
+              });
+            
+            
+              marker.addListener("onload", toggleBounce);
+              google.maps.event.addListener(marker, 'dragend', function (marker) {
+                  if(bounds.contains(new google.maps.LatLng(marker.latLng.lat(), marker.latLng.lng()))==true){
+                    console.log(marker.latLng.lat(), marker.latLng.lng());
+                    lat=marker.latLng.lat();
+                    lng=marker.latLng.lng();
+                  }else{
+                    $("#errormsg").show();
+                    console.log(marker.latLng.lat(), marker.latLng.lng());
+                    $("#errormsg").html('');
+                    $("#errormsg").append(`<span>Not Data Save Because your bike is out of area</span>`);
+                  }
+                    
+                   
+                }); 
+              }
+              
+            
+            }
+            
+            function toggleBounce() {
+              if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+              } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+              }
+            }
+            $("#savedata").on("click",function(){
+                //  console.log(byikid);
+                //  console.log(areaNumber);
+                //  console.log(lat);
+                //  console.log(lng);
+                $("#errormsg").html('');
+                if(byikid=="" || byikid==undefined){
+            
+                     $("#errormsg").show();
+                    $("#errormsg").append(`<span>bike id is missing</span>`);
+                }else if(areaNumber=="" || areaNumber==undefined){
+                    $("#errormsg").show();
+                    $("#errormsg").append(`<span>Area Number is missing, Please select area?</span>`);
+                }else if(lat=="" || lat==undefined){
+                    $("#errormsg").show();
+                    $("#errormsg").append(`<span>lat is missing</span>`);
+                }else if(lng=="" || lng==undefined){
+                    $("#errormsg").show();
+                    $("#errormsg").append(`<span>lng is missing</span>`);
+                }else{
+                    $("#errormsg").hide();
+                    var obj={
+                    id:byikid,
+                    areaId:areaNumber,
+                    lat:lat,
+                    lng:lng
+                }
+                         $.ajax({
+                              type: "POST",
+                              url: "http://15.207.162.5:3001/api/v1/updateVechile",
+                              data:JSON.stringify({'objectData': obj}),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                $("#errormsg").hide();
+                                $("#errormsg").html('');
+                                 obj={};
+                                 $('.md-modal').removeClass('md-show');
+                                 $("#mySelect").val(0);
+                                 initMap();
+                              },
+                              failure: function (msg) {
+                                console.log(msg);
+                              }
+                          });
+                }
+            });
+            function closeview(){
+                $("#mySelect").val(0);
+                initMap();
+                $("#errormsg").hide();
+                $('.md-modal').removeClass('md-show');
+             }
+              </script>
+            
+
+
+
     </body>
 </html>

@@ -11,30 +11,7 @@
         <meta name="author" content="">
         <title>Dashboard - Map UI</title>
         <!-- BEGIN: CSS Assets-->
-        <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZIIPkxUOhnlEUuegCFhDUpcAvTQIXozs&callback=runMaps&libraries=drawing&v=weekly"
-        defer
-      ></script>
         <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/app.css" />
-        <link rel="stylesheet" href="http://chintansareen.com/demo/MapUI/dist/css/style.css" />
-        
-        <style>
-           .map-w{
-               width: 100%;
-               float: left;
-           }
-           .map-w1{
-               width: 70%;
-               float: left;
-           }
-           .foem-w{
-            width: 80%;
-            display: none;
-            padding-left: 15px;
-            float: right;
-           }
-
-        </style>
         <!-- END: CSS Assets-->
     </head>
     <!-- END: Head -->
@@ -76,6 +53,26 @@
                             <a href="vehicle-add.html" class="menu">
                                 <div class="menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="menu__title"> Add Vehicle </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="menu">
+                        <div class="menu__icon"> <i data-feather="box"></i> </div>
+                        <div class="menu__title"> Area <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                    </a>
+                    <ul class="">                            
+                        <li>
+                            <a href="area-list.html" class="-menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Area List  </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="area-create.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Create Area </div>
                             </a>
                         </li>
                     </ul>
@@ -144,6 +141,26 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="javascript:;" class="menu">
+                            <div class="menu__icon"> <i data-feather="box"></i> </div>
+                            <div class="menu__title"> Area <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                        </a>
+                        <ul class="">                            
+                            <li>
+                                <a href="area-list.html" class="-menu">
+                                    <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="menu__title"> Area List  </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="area-create.html" class="menu">
+                                    <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                    <div class="menu__title"> Create Area </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <!-- END: Side Menu -->
@@ -152,9 +169,96 @@
                 <!-- BEGIN: Top Bar -->
                 <div class="top-bar">
                     <!-- BEGIN: Breadcrumb -->
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Area</a></div>
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Vehicle</a> </div>
                     <!-- END: Breadcrumb -->
-                    
+                    <!-- BEGIN: Search -->
+                    <!-- <div class="intro-x relative mr-3 sm:mr-6">
+                        <div class="search hidden sm:block">
+                            <input type="text" class="search__input input placeholder-theme-13" placeholder="Search...">
+                            <i data-feather="search" class="search__icon dark:text-gray-300"></i> 
+                        </div>
+                        <a class="notification sm:hidden" href=""> <i data-feather="search" class="notification__icon dark:text-gray-300"></i> </a>
+                        <div class="search-result">
+                            <div class="search-result__content">
+                                <div class="search-result__content__title">Pages</div>
+                                <div class="mb-5">
+                                    <a href="" class="flex items-center">
+                                        <div class="w-8 h-8 bg-theme-18 text-theme-9 flex items-center justify-center rounded-full"> <i class="w-4 h-4" data-feather="inbox"></i> </div>
+                                        <div class="ml-3">Mail Settings</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 bg-theme-17 text-theme-11 flex items-center justify-center rounded-full"> <i class="w-4 h-4" data-feather="users"></i> </div>
+                                        <div class="ml-3">Users & Permissions</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full"> <i class="w-4 h-4" data-feather="credit-card"></i> </div>
+                                        <div class="ml-3">Transactions Report</div>
+                                    </a>
+                                </div>
+                                <div class="search-result__content__title">Users</div>
+                                <div class="mb-5">
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        </div>
+                                        <div class="ml-3">Al Pacino</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">alpacino@left4code.com</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        </div>
+                                        <div class="ml-3">Al Pacino</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">alpacino@left4code.com</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
+                                        </div>
+                                        <div class="ml-3">Denzel Washington</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">denzelwashington@left4code.com</div>
+                                    </a>
+                                    <a href="" class="flex items-center mt-2">
+                                        <div class="w-8 h-8 image-fit">
+                                            <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
+                                        </div>
+                                        <div class="ml-3">Denzel Washington</div>
+                                        <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">denzelwashington@left4code.com</div>
+                                    </a>
+                                </div>
+                                <div class="search-result__content__title">Products</div>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-9.jpg">
+                                    </div>
+                                    <div class="ml-3">Samsung Galaxy S20 Ultra</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">Smartphone &amp; Tablet</div>
+                                </a>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-10.jpg">
+                                    </div>
+                                    <div class="ml-3">Samsung Q90 QLED TV</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">Electronic</div>
+                                </a>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-13.jpg">
+                                    </div>
+                                    <div class="ml-3">Apple MacBook Pro 13</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">PC &amp; Laptop</div>
+                                </a>
+                                <a href="" class="flex items-center mt-2">
+                                    <div class="w-8 h-8 image-fit">
+                                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/preview-2.jpg">
+                                    </div>
+                                    <div class="ml-3">Nikon Z6</div>
+                                    <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">Photography</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- END: Search -->
                     <!-- BEGIN: Notifications -->
                     <div class="intro-x dropdown mr-auto sm:mr-6">
                         <div class="dropdown-toggle notification notification--bullet cursor-pointer"> <i data-feather="bell" class="notification__icon dark:text-gray-300"></i> </div>
@@ -255,276 +359,123 @@
                     </div>
                     <!-- END: Account Menu -->
                 </div>
-
+                <!-- END: Top Bar -->
+                <div class="intro-y flex items-center mt-8">
+                    <h2 class="text-lg font-medium mr-auto">
+                        Add Vehicle
+                    </h2>
+                </div>
                 <div class="grid grid-cols-12 gap-6 mt-5">
-                    <div class="intro-y col-span-12 lg:col-span-12 ">
+                    <div class="intro-y col-span-12 lg:col-span-6">
+                        <input type="text" class="input w-full border flex-1"  id="deviceid" placeholder="Device Id">
+                    </div>
+                    <!-- <div class="intro-y col-span-12 lg:col-span-6">
+                        <select class="input w-full border flex-1">
+                            <option selected disabled>Vehicle type</option>
+                            <option>Vehicle 1</option>
+                            <option>Vehicle 2</option>
+                        </select>
+                    </div> -->
+                    <div class="intro-y col-span-12 lg:col-span-6">
+                        <input type="text" class="input w-full border flex-1" id="ModelName" placeholder="Model name">
+                    </div>
+                    <div class="intro-y col-span-12 lg:col-span-6">
+                        <input type="text" class="input w-full border flex-1" id="VechileNumber" placeholder="Vehicle number">
+                    </div>
+                    <div class="intro-y col-span-12 lg:col-span-6">
+                        <input type="text" class="input w-full border flex-1" id="ChassisNumber" placeholder="Chassis number">
+                    </div>
+                    <div class="intro-y col-span-12 lg:col-span-12" id="errormsg" style="display:none; text-align: center;color:red">
+                                   
+                    </div>
+                    <div class="col-span-12 lg:col-span-12  mt-4 items-center text-center">
+                        <button type="button" class="button w-24 mr-1 mb-2 bg-theme-6 text-white" id="canceldata">Cancel</button>
+                        <button type="button" class="button w-24 mr-1 mb-2 bg-theme-1 text-white" id="savedata">Submit</button>
+                    </div>
+                   
                         
-                        <div class="map-w" id="map"></div>
-                    </div>
-               
-                    <div class="md-modal md-effect-12 bg-white">
-                        <div class="md-content">
-                            <div class="grid grid-cols-12 gap-6 mt-8">
-                                <div class="intro-y col-span-12 lg:col-span-12">
-                                    <div class="px-5">
-                                        <h2 class="text-lg font-medium mr-auto">
-                                           Fill Area Name
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div class="intro-y col-span-12 lg:col-span-12">
-                                    <div class="px-5">
-                                        <input type="text" class="input w-full border flex-1" placeholder="Area Name" id="areaname">
-                                    </div>
-                                </div>
-                                <div class="intro-y col-span-12 lg:col-span-12">
-                                    <div class="px-5" id="errormsg">
-                                        
-                                    </div>
-                                </div>
-                            
-                                <div class="col-span-12 lg:col-span-12 items-center text-center">
-                                    <button type="button" id="close"  style="background-color: brown;" class="button w-24 mr-1 mb-2 bg-theme-1 text-white md-close">Close</button>
-                                    <button type="button" onclick="savaData()" class="button w-24 mr-1 mb-2 bg-theme-1 text-white md-close">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="md-overlay"></div>
-                
-
                 </div>
             </div>
             <!-- END: Content -->
-           
         </div>
         
         <!-- END: Dark Mode Switcher-->
         <!-- BEGIN: JS Assets-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="http://chintansareen.com/demo/MapUI/dist/js/app.js"></script>
-      
-        <script>
-            var saveJson={};
-            var latlngdata=[];
-            // var modal = document.getElementById("myModal");
-            var  map;
-            var runMaps = function () {
-              if (navigator.geolocation) {
-                 
-                navigator.geolocation.getCurrentPosition(function (position) {
-                 map = new google.maps.Map(document.getElementById("map"), {
-                    center: { lat: 28.6139, lng: 77.2090 },
-                    zoom: 5
-                  });
-                  
-                  google.maps.event.addListener(map, "click", function (event) {
-                    placeMarker(event.latLng);
-                    console.log(event.latLng.toUrlValue(5));
-                  });
-            
-                  function placeMarker(location) {
-                    var marker = new google.maps.Marker({
-                      position: location,
-                      map: map
-                    });
-                  }
-                  var all_overlays = [];
-                  var selectedShape;
-                  var drawingManager = new google.maps.drawing.DrawingManager({
-                    drawingMode: google.maps.drawing.OverlayType.MARKER,
-                    drawingControl: true,
-                    drawingControlOptions: {
-                      position: google.maps.ControlPosition.TOP_CENTER,
-                      drawingModes: [
-                        //google.maps.drawing.OverlayType.MARKER,
-                        google.maps.drawing.OverlayType.CIRCLE,
-                        google.maps.drawing.OverlayType.POLYGON,
-                       
-                      ]
-                    },
-                    markerOptions: {
-                      icon: "images/beachflag.png"
-                    },
-                    circleOptions: {
-                      fillColor: "#ffff00",
-                      fillOpacity: 0.2,
-                      strokeWeight: 3,
-                      clickable: false,
-                      editable: true,
-                      zIndex: 1
-                    },
-                    polygonOptions: {
-                      clickable: true,
-                      draggable: true,
-                      editable: true,
-                      fillColor: "#ffff00",
-                      fillOpacity: 1
-                    },
-                    rectangleOptions: {
-                      clickable: true,
-                      draggable: true,
-                      editable: true,
-                      fillColor: "#ffff00",
-                      fillOpacity: 0.5
-                    }
-                  });
-            
-                  function clearSelection() {
-                    if (selectedShape) {
-                      selectedShape.setEditable(false);
-                      selectedShape = null;
-                    }
-                  }
-            
-                  function setSelection(shape) {
-                    clearSelection();
-                    selectedShape = shape;
-                    shape.setEditable(true);
-                    // google.maps.event.addListener(selectedShape.getPath(), 'insert_at', getPolygonCoords(shape));
-                    // google.maps.event.addListener(selectedShape.getPath(), 'set_at', getPolygonCoords(shape));
-                  }
-            
-                  function deleteSelectedShape() {
-                    if (selectedShape) {
-                      selectedShape.setMap(null);
-                      $(".md-modal").removeClass("md-show");
-                    }
-                  }
-                  $("#close").on("click",function(){
-                   
-                        deleteSelectedShape();
-                    })
-          
-                  function deleteAllShape() {
-                    for (var i = 0; i < all_overlays.length; i++) {
-                      all_overlays[i].overlay.setMap(null);
-                    }
-                    all_overlays = [];
-                  }
-            
-                  function CenterControl(controlDiv, map) {
-                 
-                    // Setup the click event listeners: simply set the map to Chicago.
-                   $("#deletearea").on("click", function () {
-                      latlngdata=[];
-                      deleteSelectedShape();
-                      $("#areaname").val('');
-                      
-                    });
-                  }
-                  drawingManager.setMap(map);
-                  var getPolygonCoords = function (newShape) {
-                    console.log("We are one");
-                    var len = newShape.getPath().getLength();
-                    for (var i = 0; i < len; i++) {
-                      console.log(newShape.getPath().getAt(i).toUrlValue(6));
-                    }
-                  };
-            
-            
-                  google.maps.event.addListener(
-                    drawingManager,
-                    "overlaycomplete",
-                    function (event) {
-                      all_overlays.push(event);
-                      if (event.type !== google.maps.drawing.OverlayType.MARKER) {
-                        drawingManager.setDrawingMode(null);
-                    
-                        var newShape = event.overlay;
-                        newShape.type = event.type;
-                       // modal.style.display = "block";
-                        $(".md-modal").addClass("md-show");
-                        
-                      if (event.type == 'circle') {
-                        console.log(event.overlay.getRadius())
-                        latlngdata.push({shapetype:'circle',redius:event.overlay.getRadius(),lat:event.overlay.getCenter().lat(),lng:event.overlay.getCenter().lng()});
-                      
-                      }
-                      if (event.type == 'polygon') {     
-                        
-                          $.each(event.overlay.getPath().getArray(), function(key, latlng){
-                            var lat = latlng.lat();
-                            var lon = latlng.lng();   
-                            latlngdata.push({shapetype:'polygon',redius:0,lat:lat,lng:lon});
-                       
-                          });
-                        
-                      }
-                              
-                        google.maps.event.addListener(newShape, "click", function () {
-                          setSelection(newShape);
-                        });
-            
-                        setSelection(newShape);
-                      }
-                    }
-                  );
-            
-                  var centerControlDiv = document.createElement("div");
-                  var centerControl = new CenterControl(centerControlDiv, map);
-            
-                  centerControlDiv.index = 1;
-                  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
-                    centerControlDiv
-                  );
-                });
-              }
-             // google.maps.event.addDomListener(window, 'load', runMaps);
-            
-            };
-            function errormsg(msg){
-                $("#errormsg").html('');
-                $("#errormsg").append(`<span style="color:red">${msg}</span>`);
-            }
-          
-            function savaData(){
-              //console.log(latlngdata);
-             
-              if($("#areaname").val()==""){
-                errormsg("Please enter area name?")
-               
-              }else{
-                if(latlngdata.length<=0){
-                    errormsg("Please close popup and drag to new shape");
-                  
-                }
-                {
-                  var uniqueNumber=Math.floor(Math.random() * 1000000000);
-            
-                for(var x=0;x<latlngdata.length;x++){
-                latlngdata[x].AreaName=$("#areaname").val();
-                latlngdata[x].AreaNumber=uniqueNumber;
-              } 
-                      $.ajax({
-                              type: "POST",
-                              url: "http://15.207.162.5:3001/api/v1/addArea/",
-                              data:JSON.stringify({'myArray': latlngdata}),
-                              contentType: "application/json; charset=utf-8",
-                              dataType: "json",
-                              success: function (response) {
-                                //  console.log(response);
-                                  latlngdata=[];
-                                 // deleteSelectedShape();
-                                  $("#areaname").val('');
-                                 // $(".md-modal").removeClass("md-show");
-                              },
-                              failure: function (msg) {
-                              //  console.log(msg);
-                                errormsg(msg);
-                              }
-                          });
-                 }            
-                            
-                }
-            }
-            // $("#form-mmap").on("click",function(){
-            //     $(".md-modal").addClass("md-show");
-            // })
-          
-            </script>
-
-        
         <!-- END: JS Assets-->
+        <script>
+            var vechileData={};
+            $("#savedata").on("click", function(){
+                $("#errormsg").html('');
+                if($("#deviceid").val()==""){
+                    
+                    $("#errormsg").show();
+                    $("#errormsg").append(`Please Enter Device ID`);
+                }
+                if($("#deviceid").val().length!=10){
+                    
+                    $("#errormsg").show();
+                    $("#errormsg").append(`Please Enter 10-digit device valid Number`);
+                }
+                else if($("#ModelName").val()==""){
+                    
+                    $("#errormsg").show();
+                    $("#errormsg").append(`Please Enter Model Name`);
+                }
+               else if($("#VechileNumber").val()==""){
+                
+                    $("#errormsg").show();
+                    $("#errormsg").append(`Please Enter Vechile Number`);
+                }
+                else if($("#ChassisNumber").val()==""){
+                    
+                    $("#errormsg").show();
+                    $("#errormsg").append(`Please Enter Chassis Number"`);
+                }else{
+                    vechileData={
+                    DeviceId:$("#deviceid").val(),
+                    modelname:$("#ModelName").val(),
+                    vechileNumber:$("#VechileNumber").val(),
+                    chissisnumber:$("#ChassisNumber").val(),
+                    areaId:0,
+                    lat:0,
+                    lng:0,
+                    status:0
+                }
+                $("#errormsg").hide();
+                $.ajax({
+                  type: "POST",
+                  url: "http://15.207.162.5:3001/api/v1/addVechile",
+                  data:JSON.stringify({'objectData': vechileData}),
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (response) {
+                      console.log(response);
+                      $("#errormsg").html('');
+                      $("#errormsg").hide();
+                      reset();
+                  },
+                  failure: function (msg) {
+                    console.log(msg);
+                  }
+              });
+
+                }
+               
+            });
+            function reset(){
+                    $("#deviceid").val("");
+                    $("#ModelName").val("");
+                    $("#VechileNumber").val("");
+                    $("#ChassisNumber").val("");
+                    vechileData={}; 
+                    $("#errormsg").hide();
+            }
+            $("#canceldata").on("click", function(){
+                reset();
+            });
+
+        </script>
     </body>
 </html>
