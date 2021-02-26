@@ -9,7 +9,7 @@ var vechileManagement = {
             else{
 
                 if(data.length==0){
-                    var sqlquery = "insert into vechile (`DeviceId`,`modelname`,`vechileNumber`,`chissisnumber`,`areaId`,`lat`,`lng`,`status`,`status_command`) VALUES ('"+obj.DeviceId+"','"+obj.modelname+"','"+obj.vechileNumber+"','"+obj.chissisnumber+"','"+obj.areaId+"','"+obj.lat+"','"+obj.lng+"','"+obj.status+"','BikeStop')";
+                    var sqlquery = "insert into vechile (`DeviceId`,`modelname`,`vechileNumber`,`chissisnumber`,`areaId`,`lat`,`lng`,`status`,`status_command`,`bikespeed`) VALUES ('"+obj.DeviceId+"','"+obj.modelname+"','"+obj.vechileNumber+"','"+obj.chissisnumber+"','"+obj.areaId+"','"+obj.lat+"','"+obj.lng+"','"+obj.status+"','0','0')";
                     db.query(sqlquery, function (error,result) {
                        if (error) {
                           callback(error,null);
@@ -124,8 +124,8 @@ var vechileManagement = {
                                              
                                if(results.length){
 
-                                   var sqlquery = "UPDATE vechile set lat=? , lng =?,Prevlat=? , Prevlng =? WHERE DeviceId = ?";
-                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,results[0].lat,results[0].lng,number], function (error,result) {
+                                   var sqlquery = "UPDATE vechile set lat=? , lng =?,Prevlat=? , Prevlng =? bikespeed=? WHERE DeviceId = ?";
+                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,results[0].lat,results[0].lng,obj.bikespeed,number], function (error,result) {
                                            if (error) {
                                             callback(error,null);
                                             }

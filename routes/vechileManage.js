@@ -90,7 +90,7 @@ module.exports=function(deviceKey,io){
               socket.emit('bikeList', result)
              });
 
-        },30000);
+        },3000);
 
     });
   

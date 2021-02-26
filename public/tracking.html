@@ -67,6 +67,18 @@
 	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 }
+.btn{
+    padding: 10px;
+    margin-right: 10px;
+    background: #01012a;;
+    color: #ffffff;
+    cursor: pointer;
+
+}
+.active{
+    background: #17174f;
+}
+
 
         </style>
         <!-- END: CSS Assets-->
@@ -133,7 +145,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="5racking.html" class="side-menu">
+                        <a href="tracking.html" class="side-menu">
                             <div class="side-menu__icon"> <i data-feather="home"></i> </div>
                             <div class="side-menu__title"> Tracking </div>
                         </a>
@@ -392,9 +404,13 @@
                         <div id="map"></div>
                         
                     </div>
+
                     <div class="intro-y col-span-12 lg:col-span-4 ">
+                        <input type="button" id="all" class="btn" value="All" />
+                        <input type="button" id="speedover" class="btn" value="Over Speed" />
+                        <input type="button" id="outarea" class="btn" value="Out of Area" />
                         <h2 class="text-lg font-medium mr-auto  mb-5">
-                            Bike List
+                            Bike List <strong><span> Total Bike </span><span id="count"></span></strong>
                         </h2>
                         <div class="intro-y flex items-center">
                             <div class="w-full mt-3 mb-3 sm:mt-0 sm:ml-auto md:ml-0">
@@ -415,12 +431,21 @@
                         <div id="bikesearch" class="w-full hi-ctrl scrollbar" style="display:none;">
                            
                         </div>
-                        <div id="bikelisting" class="w-full hi-ctrl scrollbar" style="display:block;">
-
-                         
-                          
+                        <p id="notfound"></p>
+                        <div id="bikelisting" class="w-full hi-ctrl scrollbar">
+                            
                         </div>
+                          
+
+
+
                     </div>
+
+
+
+
+
+
                     <!-- <button class="button mr-1 mb-2 bg-theme-1 text-white mr-2 md-trigger" data-modal="modal-12">Show modal</button> -->
                     <div class="md-modal md-effect-12 bg-white">
                         <div class="md-content">
@@ -505,6 +530,8 @@
   <script>
   var Coords=[],bikeListData=[],shapename;
   var socket;
+ // $('#all').removeClass('active');
+   
 
         function areaList(){
                         $.ajax({
@@ -577,20 +604,20 @@
                   url: "http://15.207.162.5:3001/api/v1/vechilesinglearea",
                   data:{"area":areaname,"deviceId":deviceid},
                   success: function (response) {
-                   // console.log(response.length);
+                    console.log(response.length);
                     $("#bikelisting").hide();
                    $("#bikesearch").show();
-                  
-                   
+                   $("#count").html('');
+                   $("#count").append(`<span>${response.length}</span>`);
                     if(response.length>0){
 
                         var html='';
-                      if(response[0].status_command=="BikeStop"){
+                      if(response[0].status_command=="0"){
                         html+=`<div id="Bike${response[0].DeviceId}">Loding...</div>`;
                       }else{
                         html+=`<div id="Bike${response[0].DeviceId}">Loding...</div>`;
                       }
-                      $("#bikesearch").append(`<div class="box mb-4">
+                      $("#bikesearch").append(`<div class="box mb-4"  id="list${response[x].DeviceId}">
                                 <div class="flex flex-col p-5 pb-0 border-b">
                                     <div class=" mt-0">
                                         <p class="font-medium">Device ID <span class="text-gray-600 float-right">${response[0].DeviceId}</span></p> 
@@ -624,7 +651,8 @@
 
   }
 function areaSingle(areaname){
-  return new Promise((resolve, reject) => {
+    
+    return new Promise((resolve, reject) => {
             $.ajax({
                   type: "Post",
                   url: "http://15.207.162.5:3001/api/v1/areaSingle",
@@ -643,18 +671,21 @@ function areaSingle(areaname){
                   success: function (response) {
                    //console.log(response);
                    $("#bikelisting").html('');
+                   $("#bikelistout").html('');
                     bikeListData=[];
                     //shapename=response.shapetype;
+                    $("#count").html('');
+                   $("#count").append(`<span>${response.length}</span>`);
                     for(var x=0;x<response.length;x++){
                       bikeListData.push({lat:parseFloat(response[x].lat),lng:parseFloat(response[x].lng)});
                       var html='';
-                       if(response[x].status_command=="BikeStop"){
+                       if(response[x].status_command=="0"){
                         html+=`<div id="Bike${response[x].DeviceId}" >Loding...</div>`;
                       }else{
                         html+=`<div id="Bike${response[x].DeviceId}" >Loding...</div>`;
                       }
                      
-                      $("#bikelisting").append(`<div class="box mb-4">
+                      $("#bikelisting").append(`<div class="box mb-4" id="list${response[x].DeviceId}">
                                 <div class="flex flex-col p-5 pb-0 border-b">
                                     <div class=" mt-0">
                                         <p class="font-medium">Device ID <span class="text-gray-600 float-right">${response[x].DeviceId}</span></p> 
@@ -664,10 +695,14 @@ function areaSingle(areaname){
                                     </div>
                                     <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 mb-5">
                                         ${html}
-                                        <button onClick="view(${response[x].DeviceId})" class="button w-24 justify-center block bg-theme-1 text-white ml-2 md-trigger" data-modal="modal-12" href="#">View</button>
+                                     <button onClick="view(${response[x].DeviceId})" class="button w-24 justify-center block bg-theme-1 text-white ml-2 md-trigger" data-modal="modal-12" href="#">View</button>
+                                    
                                     </div>
                                 </div>
                             </div>`);
+
+                            
+
 
                      feather.replace();
                     };
@@ -691,9 +726,10 @@ function areaSingle(areaname){
 
      
 let map;
-
+//var geocoder;
 function initMap() {
-  
+$('#all').addClass("active");
+//geocoder = new google.maps.Geocoder();
 if(Coords.length<=0){
 //modal.style.display = "block";
   map = new google.maps.Map(document.getElementById("map"), {
@@ -705,7 +741,7 @@ if(Coords.length<=0){
  
 }
 var newBikelist=[];
-
+var overspeed=[],outarea=[];
 var markers=[];
 function initMap2(){
    
@@ -763,30 +799,31 @@ else{
               newBikelist.push({DeviceId:response[x].DeviceId,status_command:response[x].status_command,vechileNumber:response[x].vechileNumber, lat:parseFloat(response[x].lat),lng:parseFloat(response[x].lng), Prevlat:parseFloat(response[x].Prevlat),Prevlng:parseFloat(response[x].Prevlng)});            
                     $("#Bike"+newBikelist[x].DeviceId).html('');
                     $("#speed"+newBikelist[x].DeviceId).html('');
+                    $("#speeds"+newBikelist[x].DeviceId).html('');
             
-                      if(response[x].status_command=="BikeStop"){
-                        $("#Bike"+newBikelist[x].DeviceId).append(`<button onClick="bikecommand(${response[x].DeviceId},'BikeStart')" class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300">Bike Start</button>`);  
+                      if(response[x].status_command=="0"){
+                        $("#Bike"+newBikelist[x].DeviceId).append(`<button onClick="bikecommand(${response[x].DeviceId},'1')" class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300">Bike Start</button>`);  
                         
                       }else{
-                        $("#Bike"+newBikelist[x].DeviceId).append(`<button onClick="bikecommand(${response[x].DeviceId},'BikeStop')" class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300" style="background:#01012a;color:white;">Bike Stop</button>`);  
+                        $("#Bike"+newBikelist[x].DeviceId).append(`<button onClick="bikecommand(${response[x].DeviceId},'0')" class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300" style="background:#01012a;color:white;">Bike Stop</button>`);  
                         
                       }
                      
                       var distance=calcDistance(response[x].Prevlat,response[x].Prevlng,response[x].lat,response[x].lng);
-                                           
+                    
+                    overspeed=[];
                       if(distance/(30/3600)<=60){
-                         console.log("Kam",newBikelist[x].DeviceId)
-                        $("#speed"+newBikelist[x].DeviceId).append(`<p class="font-medium" style="margin-top: 10px;background:#d2c7c7; padding: 8px; font-weight: 800;">Current Speed <span class="float-right" id="speed${response[x].DeviceId}">${distance/(30/3600)} KM/H</span></p> `);
+                         
+                        $("#speed"+newBikelist[x].DeviceId).append(`<p class="font-medium" style="margin-top: 10px;background:#d2c7c7; padding: 8px; font-weight: 800;">Current Speed <span class="float-right" id="speed${response[x].DeviceId}">${(distance/(30/3600)).toFixed(1)} KM/H</span></p> `);
                      }else{
-                        console.log("jyda",newBikelist[x].DeviceId)
-                        $("#speed"+newBikelist[x].DeviceId).append(`<p class="font-medium" style="margin-top: 10px;background:#d2c7c7; padding: 8px; font-weight: 800;">Current Speed <span class="float-right" id="speed${response[x].DeviceId}" style="color:red">${distance/(30/3600)} KM/H</span></p> `);
+                        overspeed.push(newBikelist[x]);
+                        $("#speed"+newBikelist[x].DeviceId).append(`<p class="font-medium" style="margin-top: 10px;background:#d2c7c7; padding: 8px; font-weight: 800;">Current Speed <span class="float-right" id="speed${response[x].DeviceId}" style="color:red">${(distance/(30/3600)).toFixed(1)} KM/H</span></p> `);
                      }
-                      
                     
                      }
-  
-      for(var x=0;x<newBikelist.length;x++){ 
-    
+       
+        for(var x=0;x<newBikelist.length;x++){ 
+       // outarea=[];
         if(newBikelist[x].status_command == 'BikeStart'){
         var icon_img = "http://maps.google.com/mapfiles/ms/icons/green-dot.png" ;
         } else {
@@ -811,34 +848,144 @@ else{
                      
        $("#"+newBikelist[x].DeviceId).append('<span style="color:green; padding: 7px;font-size: 15px; background:lightgreen; line-height: 15px; margin-left: 37px;">Bike Inside</span>');
         if(bounds.contains(new google.maps.LatLng(newBikelist[x].lat,newBikelist[x].lng))==false){
+            outarea.push(newBikelist[x]);
             $("#"+marker.id).html('');
-            $("#"+marker.id).append('<span style="color: red; padding:7px;font-size: 15px; background: bisque;line-height: 15px; margin-left: 37px;">Bike Outside</span>');
-              // InfoWindow content
-              var content = '<div id="iw-container">' +
+            $("#"+marker.id).append(`<button onClick="placeMarker(${newBikelist[x].DeviceId},${newBikelist[x].Prevlat},${newBikelist[x].Prevlng},${newBikelist[x].lat},${newBikelist[x].lng})" style="color: red; padding:7px;font-size: 15px; background: bisque;line-height: 15px; margin-left: 37px;">Bike Outside</button>`);
+            
+     }
+             markers.push(marker);
+           //  feather.replace();
+       }
+  
+     });
+
+}
+
+function placeMarker(id,plat,plng,lat,lng) {
+    var content ='';
+    var distance1=calcDistance(plat,plng,lat,lng);
+    content ='';                       
+    
+                  for(var y=0;y<markers.length;y++){
+                      if(markers[y].id==id){
+                        const geocoder = new google.maps.Geocoder();
+                        geocodeLatLng(geocoder,lat,lng)
+                     content = '<div id="iw-container">' +
                     '<div class="iw-title">OutSide Area</div>' +
                     '<div class="iw-content">' +
                       '<div class="iw-subTitle">Bike Details</div>' +
-                       '<p>Device ID : '+marker.id+'</p>' +
-                       '<p>Vechile Number : '+marker.title+'</p>' +
+                       '<p>Device ID : '+markers[y].id+'</p>' +
+                       '<p>Vehicle Number : '+markers[y].title+'</p>' +
                        '<p>Driver Name: Test Driver ,Phone. +351 234 320 600</p>'+
-                       '<p>Speed : '+distance1/(30/3600)+'KM/H</p>'+
+                       '<p>Speed : '+(distance1/(30/3600)).toFixed(1)+'KM/H</p>'+
                       
                   '</div>';
                   var infowindow = new google.maps.InfoWindow({
                     content: content,
                     maxWidth: 350
                   });
-                  infowindow.open(map,marker);
-                  range='Outside';
-               }
-             markers.push(marker);
-           //  feather.replace();
-       }
-  
-   });
-   //calDistance();
-  
+                  infowindow.open(map,markers[y]);
+
+                    map.setZoom(8);
+                    map.panTo(markers[y].getPosition());
+                      
+                         break;
+                      }           
+                  }
+        
+   }
+
+function geocodeLatLng(geocoder,lat,lng) {
+ 
+  const latlng = {
+    lat: lat,
+    lng:lng,
+  };
+  geocoder.geocode({ location: latlng }, (results, status) => {
+    if (status === "OK") {
+      if (results[0]) {
+      console.log(results[0].formatted_address);
+      } else {
+        console.log("No results found");
+      }
+    } else {
+        console.log("Geocoder failed due to: " + status);
+    }
+  });
 }
+
+$(document).ready(function(){ 
+$("#all").click(()=>{
+
+    $('#outarea').removeClass("active");
+    $('#speedover').removeClass("active");
+    $("#all").addClass("active");
+    
+    $("#notfound").html('');
+    $("#bikelisting").show();
+    
+    for(var y=0;y<newBikelist.length;y++){
+    $("#list"+newBikelist[y].DeviceId).show();
+    }
+
+   });
+
+   $("#speedover").click(()=>{
+
+    $('#all').removeClass("active");
+    $('#outarea').removeClass("active");
+    $("#speedover").addClass("active");
+
+    
+    $("#notfound").html('');
+   if(overspeed.length>0){
+    $("#bikelisting").show();
+    
+    for(var x=0;x<overspeed.length;x++){
+        for(var y=0;y<newBikelist.length;y++){
+         if(newBikelist[y].DeviceId==overspeed[x].DeviceId){
+            $("#list"+newBikelist[y].DeviceId).show() 
+         }else{
+            $("#list"+newBikelist[y].DeviceId).hide() 
+         }
+      
+        }
+    }
+}else{
+    $("#bikelisting").hide();
+    
+$("#notfound").append(`<span>Not Found!!</span>`);
+}
+});
+
+$("#outarea").click(()=>{
+    
+    $('#speedover').removeClass("active");
+    $('#all').removeClass("active");
+    $("#outarea").addClass("active");
+
+    $("#notfound").html('');
+   if(outarea.length>0){
+    $("#bikelisting").show();
+     for(var x=0;x<outarea.length;x++){
+        for(var y=0;y<newBikelist.length;y++){
+         if(newBikelist[y].DeviceId==outarea[x].DeviceId){
+            $("#list"+newBikelist[y].DeviceId).show() 
+         }else{
+            $("#list"+newBikelist[y].DeviceId).hide() 
+         }
+      
+        }
+    }
+}else{
+    
+    $("#bikelisting").hide();
+    
+$("#notfound").append(`<span>Not Found!!</span>`);
+}   
+});
+
+});
 
 //calculates distance between two points in km's
 // function calcDistance(p1, p2) {
@@ -851,27 +998,6 @@ function calcDistance (fromLat, fromLng, toLat, toLng) {
 
 
 
-function calDistance(){
-
-    var home = ['New Delhi', new google.maps.LatLng(28.469132479213833, 77.23097265625002)];
-
-var pts = [
-        ['Sonipat', new google.maps.LatLng(28.469132479213833, 77.23097265625002)],
-       
-];
-
-var output = '';
-
-var dist = google.maps.geometry.spherical.computeDistanceBetween;
-
-pts.forEach(function(pt){
-    output += home[0] + ' to ' + pt[0] + ': ' + 
-        (dist(home[1], pt[1])/1000).toFixed(1) + ' km\n';
-});
-console.log(output);
-
-
-}
 
 function DeleteMarkers() {
         //Loop through all the markers and remove
