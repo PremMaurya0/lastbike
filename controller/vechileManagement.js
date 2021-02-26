@@ -125,7 +125,7 @@ var vechileManagement = {
                                if(results.length){
 
                                    var sqlquery = "UPDATE vechile set lat=? , lng =?,Prevlat=? , Prevlng =? bikespeed=? WHERE DeviceId = ?";
-                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,results[0].lat,results[0].lng,obj.bikespeed,number], function (error,result) {
+                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,results[0].lat,results[0].lng,obj.byketime,number], function (error,result) {
                                            if (error) {
                                             callback(error,null);
                                             }
