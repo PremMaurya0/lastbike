@@ -1,5 +1,8 @@
 const db = require('../DbConnection');
 var _=require("underscore");
+var momentzone = require('moment-timezone');
+//momentzone.tz.setDefault("Asia/Dubai");
+
 var vechileManagement = {
 
     vechileData:function(obj,callback){
@@ -81,7 +84,22 @@ var vechileManagement = {
                       callback(error,null);
                       }
                       else{ 
-                          callback("Update Data",null);
+                        console.log(statusObj);
+                        
+                        var sqlquery = "insert into bikecommand_history (`bikeid`,`bikecommand_status`,`status_time`) VALUES ('"+number+"','"+statusObj+"','"+ momentzone().format('DD MMM YYYY hh:mm:ss A').toLocaleString('en-IN',{timeZone: "Asia/Dubai"})+"')";
+                        db.query(sqlquery, function (error,result) {
+                               if (error) {
+                              callback(error,null);
+                            }
+                        else{ 
+                            console.log("update now");
+                            callback("Update Data",null);
+
+                        // callback(result,null);
+                            }
+                      });
+
+                         
                       }
                   });
               }
@@ -107,6 +125,7 @@ var vechileManagement = {
               
             
              },
+            
              updatebykedata:function(obj,callback){
         
                if(obj.deviceKey=="" || obj.deviceKey==undefined){
@@ -123,14 +142,26 @@ var vechileManagement = {
                            else{  
                                              
                                if(results.length){
-
-                                   var sqlquery = "UPDATE vechile set lat=? , lng =?,Prevlat=? , Prevlng =? bikespeed=? WHERE DeviceId = ?";
-                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,results[0].lat,results[0].lng,obj.byketime,number], function (error,result) {
+                               
+                                   var sqlquery = "UPDATE vechile set lat=? , lng =?,Prevlat=? , Prevlng =?, bikespeed=? WHERE DeviceId = ?";
+                                        db.query(sqlquery,[obj.datalatitute,obj.datalogitute,results[0].lat,results[0].lng,obj.datatime,number], function (error,result) {
                                            if (error) {
                                             callback(error,null);
                                             }
-                                            else{ 
-                                             callback('update record!',null);
+                                            else{
+
+                                                var sqlquery = "insert into history_table (`deviceid`,`speed`,`lat`,`lng`,`updatedate_time`) VALUES ('"+obj.datamobile+"','"+obj.datatime+"','"+obj.datalatitute+"','"+obj.datalogitute+"','"+ momentzone().format('DD MMM YYYY hh:mm:ss A').toLocaleString('en-IN',{timeZone: "Asia/Dubai"})+"')";
+                                                db.query(sqlquery, function (error,result) {
+                                                       if (error) {
+                                                      callback(error,null);
+                                                    }
+                                                else{ 
+                                                    callback('update record!',null);
+
+                                                // callback(result,null);
+                                                    }
+                                              });
+                                            
                                            }
                                     });
 
