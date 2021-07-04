@@ -12,7 +12,7 @@ var areaManagement = {
                           }
                          else{ 
                             //console.log(result);
-                            callback(result,null);
+                            callback("Added New record!",null);
                      }
                });
         },

@@ -6,13 +6,15 @@ var _=require("underscore");
 module.exports=function(){
 
     router.post('/v1/addArea', function(req, res) {
-
-      if(req.body.myArray.length>0){
-        areaManagementCtrl.addareaNewdata(req.body.myArray,result=>{
-            res.json(result);
+console.log(req.body);
+      if(req.body.length>0){
+        areaManagementCtrl.addareaNewdata(req.body,result=>{
+           // res.json(result);
+            res.status(200).json({error:false,message:result});
             });
         }else{
-            res.json({msg:"invalid Data"});
+          //  res.json({msg:"invalid Data"});
+            res.status(200).json({error:true,message:"invalid Data"});
         }
     
     });

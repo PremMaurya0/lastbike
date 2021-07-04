@@ -8,23 +8,31 @@ const payload=require('./payload');
 module.exports=function(deviceKey,io){
 
     router.post('/v1/addVechile', function(req, res) {
+//console.log(req.body);
+//console.log(req.body);
 
-        if(req.body.objectData.DeviceId==""){
+        if(req.body.DeviceId==""){
             res.json({message:"Please Enter Device Id"});
         }
-       else if(req.body.objectData.modelname==""){
+       else if(req.body.modelname==""){
         res.json({message:"Please Enter Model Name"});
             
         }
-        else if(req.body.objectData.vechileNumber==""){
+        else if(req.body.vechileNumber==""){
             res.json({message:"Please Enter Vechile Number"});
         }
-       else if(req.body.objectData.chissisnumber==""){
+       else if(req.body.chissisnumber==""){
         res.json({message:"Please Enter Chassis Number"});
         }else{
 
-          vechileManagementCtrl.vechileData(req.body.objectData,result=>{
-            res.json(result);
+          vechileManagementCtrl.vechileData(req.body,result=>{
+           // console.log(result)
+            if(result==2){
+              res.json({error:true,message:"Duplicate Device Id"});
+            }else{
+              res.json({error:false,message:"Added new record"});
+            }
+          
           });
         
 
@@ -41,21 +49,24 @@ module.exports=function(deviceKey,io){
     router.post('/v1/updateVechile', function(req, res) {
 
         if(req.body.objectData.areaId==""){
-            res.json({message:"Area Id is missing"});
+            res.json({error:true,message:"Area Id is missing"});
         }
        else if(req.body.objectData.id==""){
-        res.json({message:"id is missing"});
+        res.json({error:true,message:"id is missing"});
             
         }
         else if(req.body.objectData.lat==""){
-            res.json({message:"lat is missing"});
+            res.json({error:true,message:"lat is missing"});
         }
        else if(req.body.objectData.lng==""){
-        res.json({message:"lng is missing"});
+        res.json({error:true,message:"lng is missing"});
         }else{
 
           vechileManagementCtrl.vechileUpdate(req.body.objectData,result=>{
-            res.json(result);
+           // res.json(result);
+          
+            res.json({error:false,message:result});
+          
           });
         
 
@@ -68,6 +79,29 @@ module.exports=function(deviceKey,io){
           });
 
     });
+
+    router.post('/v1/vechileSingle', function(req, res) {
+      
+         vechileManagementCtrl.vehicleSingle({data:req.body.vehicleobj.id},result=>{
+             res.json(result);
+           });
+ 
+     });
+     router.post('/v1/vechileEdit', function(req, res) {
+     
+        vechileManagementCtrl.vechileEdit(req.body.vehicleobj,result=>{
+            res.json(result);
+          });
+
+    });
+    router.post('/v1/vechileDelete', function(req, res) {
+      console.log(req.body.vehicleobj);
+        vechileManagementCtrl.vechileDelete(req.body.vehicleobj,result=>{
+            res.json(result);
+          });
+
+    });
+
     router.post('/v1/vechilesinglearea', function(req, res) {
       
          vechileManagementCtrl.vechileSingleAreaBase({data:req.body.area,DeviceId:req.body.deviceId},result=>{
@@ -76,23 +110,53 @@ module.exports=function(deviceKey,io){
  
      });
 
-    io.on('connection', function(socket) {
 
-      console.log('A user connected');    
 
-      socket.on('disconnect', function () {
-         console.log('A user disconnected');
-      });
+let interval;
+
+io.on("connection", (socket) => {
+  console.log("New client connected");
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 10000);
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+    clearInterval(interval);
+  });
+});
+
+const getApiAndEmit = socket => {
+   vechileManagementCtrl.vechileAreaBase({data:socket.handshake.query['foo']},result=>{
+           // console.log(result);
+     socket.emit('event', result)
+   });
+};
+
+
+
+// let interval;
+    // io.on('connection', function(socket) {
+
+    //  console.log('A user connected',socket.handshake.query['foo']);    
+       
       
-        setInterval(() => {  
+    //    setInterval(() => {  
       
-          vechileManagementCtrl.vechileAreaBase({data:socket.handshake.query['foo']},result=>{
-              socket.emit('bikeList', result)
-             });
+    //       vechileManagementCtrl.vechileAreaBase({data:socket.handshake.query['foo']},result=>{
+    //         ///console.log(result);
+    //           socket.emit('bikeList', result)
+    //          });
 
-        },3000);
+    //     },3000);
 
-    });
+
+    //      socket.on('disconnect', function () {
+    //      console.log('A user disconnected');
+    //      //clearInterval(interval);
+    //   });
+
+    // });
   
      
     router.post('/v1/newupdateStatus', function(req, res) {

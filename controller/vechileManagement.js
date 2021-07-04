@@ -18,11 +18,11 @@ var vechileManagement = {
                           callback(error,null);
                          }
                         else{ 
-                           callback(result,null);
+                           callback(1,null);
                     }
                  });
                 }else{
-                    callback("Duplicate Device Id",null);
+                    callback(2,null);
                 }
             }
         });
@@ -47,7 +47,7 @@ var vechileManagement = {
                               }
                              else{ 
                                 //console.log(result);
-                                callback(result,null);
+                                callback("Update Record!",null);
                          }
                    });
             },
@@ -125,7 +125,67 @@ var vechileManagement = {
               
             
              },
-            
+            vehicleSingle:(obj,callback)=>{
+
+                var sqlquery = "select * from vechile WHERE id = ?";   
+                db.query(sqlquery,[obj.data], function (error,result) {
+                   if (error) {
+                      callback(error,null);
+                     }
+                    else{ 
+                      
+                      // if(result.length>0){
+                        callback(result[0],null);
+                    //    }else{
+                    //     callback("Record Not found!!",null);
+                    //    }
+                      
+                }
+          });
+            },
+
+            vechileEdit:function(obj,callback){
+               
+                var sqlquery = "UPDATE vechile set DeviceId=?,modelname=?,vechileNumber=?,chissisnumber=? WHERE id = ?";   
+                            db.query(sqlquery,[obj.DeviceId,obj.modelname,obj.vechileNumber,obj.chissisnumber,obj.id], function (error,result) {
+                               if (error) {
+                                  callback(error,null);
+                                 }
+                                else{ 
+                                   //console.log(result);
+                                   callback("Update Record!",null);
+                            }
+                      });
+               },
+               vechileDelete:function(obj,callback){
+               
+                     var sqlquery = "select * from vechile WHERE id = ?";   
+                            db.query(sqlquery,[obj.id], function (error,result) {
+                               if (error) {
+                                  callback(error,null);
+                                 }
+                                else{ 
+                                   console.log(result[0]);
+                                   if(result[0].areaId==0){
+                                    var sqlquery1 = "delete from vechile WHERE id = ?";   
+                                    db.query(sqlquery1,[obj.id], function (error,result) {
+                                       if (error) {
+                                          callback(error,null);
+                                         }else{
+                                            callback("Record is deleted!!",null);  
+                                         }
+                                        
+                                      });
+
+
+                                   }else{
+                                    callback("Record not deleted!!because area and vehicle both are maped!",null);
+                                   }
+                                   
+                            }
+                      });
+               },
+
              updatebykedata:function(obj,callback){
         
                if(obj.deviceKey=="" || obj.deviceKey==undefined){

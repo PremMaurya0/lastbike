@@ -135,6 +135,9 @@ var momentzone = require('moment-timezone');
                     });
                 
          
+     },
+     addNewBike:function(obj,callback){
+
      }
 
 

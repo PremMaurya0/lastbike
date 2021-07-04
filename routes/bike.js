@@ -66,6 +66,7 @@ module.exports=function(deviceKey,io){
           }
      
     });
+    
     router.post('/v1/updateStatus', function(req, res) {
 
         if(req.body.gsmmobile==undefined || req.body.gsmmobile==""){

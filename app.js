@@ -7,14 +7,20 @@ require("dotenv").config();
 const app = express();
 app.set('deviceKey', 'Prem_Maurya');
 const http = require('http').Server(app); 
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, {
+  cors: {
+    origin: '*',
+    methods: ["GET", "POST"]
+  }
+});
 require("./DbConnection");
 
 //Route Define
 //var byke = require('./routes/bike')(app,io);
 var area = require('./routes/areaManage')();
 var vechile = require('./routes/vechileManage')(app,io);
-//var testapp = require('./routes/test');
+var users = require('./routes/users')();
+var driver = require('./routes/driver')();
 //var testsocket = require('./routes/testsocket')(io);
 
 app.use(bodyParser.json({limit: '500000mb'}));
@@ -35,18 +41,18 @@ app.use((req, res, next)=>{
 
 
 
-app.get('/', function(req, res) {
-  res.sendfile('index.html');
-});
+// app.get('/', function(req, res) {
+//   res.sendfile('index.html');
+// });
 
 //app.use('/api', testsocket);
-//app.use('/api', byke);
+app.use('/api', users);
 app.use('/api', area);
 app.use('/api', vechile);
-
-app.get('/', function(req, res) {
-  res.sendfile('index.html');
-});
+app.use('/api', driver);
+// app.get('/', function(req, res) {
+//   res.sendfile('index.html');
+// });
 
 
 http.listen(3001,(err)=>{
